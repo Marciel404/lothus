@@ -1,0 +1,8 @@
+configData = {
+
+    "token": "",
+
+    "mongokey": "",
+
+    "prefix": ""
+}
