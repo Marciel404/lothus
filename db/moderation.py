@@ -29,7 +29,7 @@ async def autorole(opt,oq,guild,id):
 
         mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?':oq,'id':id}}}, upsert = True)
 
-async def logs(opt,oq,guild,id):
+async def logs(opt,oq,guild,id, webhook):
 
     if opt is not None:
 
@@ -37,7 +37,7 @@ async def logs(opt,oq,guild,id):
 
             mod.insert_one({"_id":guild.id, "Nome":guild.name})
 
-        mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?': oq,'id': id}}},upsert = True)
+        mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?': oq,'id': id, 'webhook': webhook}}},upsert = True)
 
 async def adcadvdb(guild, author, member, qnt, motivo):
 

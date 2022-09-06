@@ -17,6 +17,10 @@ class gerais(commands.Cog):
     @slash_command(name = 'hello_world', description = 'Comandos de teste do Lothus')
     async def hello(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         await ctx.respond(t["args"]["hello"])
@@ -25,6 +29,10 @@ class gerais(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def help(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         h = discord.Embed(title =  t['help']['extras']['commands'],
@@ -32,22 +40,30 @@ class gerais(commands.Cog):
         )
         h.set_thumbnail(url = self.bot.user.avatar)
 
-        await ctx.respond(embed = h, view = discord.ui.View(selecthelp(self.bot,ctx.author,ctx.guild)))
+        await ctx.respond(embed = h, view = discord.ui.View(selecthelp(self.bot,ctx.author,t)))
 
     @slash_command(name = 'random', description = 'Escolhe um numero aleatorio')
     @option(name = 'number', description = 'Coloque um numero')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def aleatorio(self, ctx,numero: int):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
         
         dado = random.randint(0,int(numero))
 
-        await ctx.respond(f'{t["args"]["ping"]} {dado}')
+        await ctx.respond(f'{t["args"]["random"]} {dado}')
 
     @slash_command(name = 'ping', description = 'Envia meu ping')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def ping(self, ctx):
+
+        if ctx.guild == None:
+            
+            return
         
         start_time = time.time()
 
@@ -71,6 +87,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @commands.cooldown(2, 5, commands.BucketType.user)
     async def servers(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         await ctx.respond(t["args"]["servers"]["s"].format(str(len(self.bot.guilds))))
@@ -79,6 +99,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @commands.cooldown(1, 5, commands.BucketType.user)
     @option(name = 'server', description = 'Envie o id do server')
     async def serverInfo(self, ctx, server: discord.Guild = None):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -155,6 +179,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @option(name = 'member', description = 'Escolha um membro')
     async def userinfo(self, ctx, member: discord.Member = None):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
         
         if member == None:
@@ -219,6 +247,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @option(name = 'member', description = 'Ecolha um membro')
     async def avatar(self, ctx, member: discord.Member = None):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         if member == None:
@@ -253,6 +285,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @slash_command(name = 'invite', description = 'Encia o link para me convidar para seu server')
     async def invite(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
         
         e = discord.Embed(title = t['args']['invite']['invite'], 
@@ -266,6 +302,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @slash_command(name = 'vote', description = 'Envia o link para votar em mim no top.gg')
     @commands.cooldown(1,5,commands.BucketType.user)
     async def Vote(self, ctx):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -296,6 +336,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
     @slash_command(name = 'bot_info', description = 'Envia algumas informações minha')
     async def botinfo(self, ctx):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -339,6 +383,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
     @option(name = 'emoji', description = 'Escolha um emoji')
     async def EmojiInfo(self, ctx, emoji: discord.Emoji):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         e1 = self.bot.get_emoji(971487187361218620)
@@ -380,5 +428,4 @@ API: {round((end_time - start_time) * 1000)}ms''',
         await ctx.respond(file = discord.File('./images_fonts/saves/emoji.png'))
 
 def setup(bot:commands.Bot):
-
     bot.add_cog(gerais(bot))

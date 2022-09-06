@@ -1,4 +1,4 @@
-import discord, requests, random
+import discord, requests, random, aiohttp
 
 from discord.ext import commands
 from discord import slash_command, option
@@ -13,6 +13,10 @@ class actions(commands.Cog):
 
     @slash_command(name = 'flip_coin', description = 'Joga uma moeda de cara ou coroa')
     async def flipcoin(self, ctx):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -29,6 +33,10 @@ class actions(commands.Cog):
     @slash_command(name = 'hug', description = 'hug one member')
     @option(name = 'member', description = 'Select one member')
     async def hug(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -51,6 +59,10 @@ class actions(commands.Cog):
     @slash_command(name = 'kiss', description = 'kiss one member')
     @option(name = 'member', description = 'Select one member')
     async def kiss(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -79,6 +91,10 @@ class actions(commands.Cog):
     @slash_command(name = 'slap', description = 'Slap one member')
     @option(name = 'member', description = 'Select one member')
     async def slap(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -114,6 +130,10 @@ class actions(commands.Cog):
     @option(name = 'member', description = 'Select one member')
     async def punch(self, ctx, member: discord.Member):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         r = requests.get(
@@ -148,6 +168,10 @@ class actions(commands.Cog):
     @option(name = 'member', description = 'Select one member')
     async def bite(self, ctx, member: discord.Member):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         r = requests.get(
@@ -170,6 +194,10 @@ class actions(commands.Cog):
     @option(name = 'member', description = 'Mention member')
     async def lick(self, ctx, member: discord.Member):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         r = requests.get(
@@ -191,6 +219,10 @@ class actions(commands.Cog):
     @slash_command(name = 'cafune', description = 'Faz um cafune em alguem')
     @option(name = 'member', description = 'Mencione um member')
     async def pat(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 

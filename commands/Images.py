@@ -1,4 +1,4 @@
-import discord, random, requests
+import discord, requests
 
 from PIL import ImageDraw, ImageFont, Image
 from io import BytesIO
@@ -16,10 +16,20 @@ class images(commands.Cog):
     @option(name = 'member', description = 'Mencione um membro')
     @commands.cooldown(1,5,commands.BucketType.user)
     async def procurado(self, ctx, member: discord.Member = None):
-    
-        if member == None:
 
-            member = ctx.author
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        o = requests.get(headers = {"Authorization": configData['topauth']},url = f'https://top.gg/api/bots/1012121641947517068/check?userId={ctx.author.id}')
+
+        if o.json()['voted'] == 1:
+
+            if member == None:
+
+                member = ctx.author
 
             if mod.find_one({'_id':ctx.guild.id})['lang'] != 'pt-br':
 
@@ -56,131 +66,94 @@ class images(commands.Cog):
             procurado.save('./images/img/Procurado.jpg')
 
             await ctx.respond(file = discord.File('./images/img/Procurado.jpg'))
+        
+        else:
+
+            await ctx.respond(t['args']['notvote'])
 
     @slash_command(name = 'achievement_minecraft', description = 'Cria uma conquista do minecraft')
     @option(name = 'achievement', description = 'Escreva a conquista')
     @commands.cooldown(1,5,commands.BucketType.user)
     async def conquistamine(self ,ctx, name):
 
-        conquista1 = Image.open('./images/images/conquista.jpeg')
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        o = requests.get(headers = {"Authorization": configData['topauth']},url = f'https://top.gg/api/bots/1012121641947517068/check?userId={ctx.author.id}')
+
+        if o.json()['voted'] == 1:
+
+            conquista1 = Image.open('./images/images/conquista.jpeg')
         
-        draw = ImageDraw.Draw(conquista1)
+            draw = ImageDraw.Draw(conquista1)
 
-        font = ImageFont.truetype("./images/fonts/Minecrafter.Alt.ttf",size=15)
+            font = ImageFont.truetype("./images/fonts/Minecrafter.Alt.ttf",size=15)
 
-        draw.text((59,35), name ,font = font)
+            draw.text((59,35), name ,font = font)
 
-        conquista1.save('./images/img/conquista.png')
+            conquista1.save('./images/img/conquista.png')
 
-        await ctx.respond(file = discord.File('./images/img/conquista.png'))
+            await ctx.respond(file = discord.File('./images/img/conquista.png'))
+        
+        else:
+
+            await ctx.respond(t['args']['notvote'])
 
     @slash_command(name = 'perfection', description = 'Cria um memme de "perfeição"')
     @option(name = 'member', description = 'Mencione um membro')
     @commands.cooldown(1,5,commands.BucketType.user)
     async def perfeição(self, ctx, member: discord.Member = None):
-    
+
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
-        if member == None:
+        o = requests.get(headers = {"Authorization": configData['topauth']},url = f'https://top.gg/api/bots/1012121641947517068/check?userId={ctx.author.id}')
 
-            member = ctx.author
+        if o.json()['voted'] == 1:
 
-        perfeição = Image.open('./images/images/perfeicao.jpeg')
+            if member == None:
 
-        draw = ImageDraw.Draw(perfeição)
+                member = ctx.author
 
-        font = ImageFont.truetype("./images/fonts/LeagueGothic-Regular-VariableFont_wdth.ttf",size=20)
+            perfeição = Image.open('./images/images/perfeicao.jpeg')
 
-        draw.text((9,6), t['args']['images']['perfection'] , fill= (0,0,0) ,font = font)
+            draw = ImageDraw.Draw(perfeição)
+
+            font = ImageFont.truetype("./images/fonts/LeagueGothic-Regular-VariableFont_wdth.ttf",size=20)
+
+            draw.text((9,6), t['args']['images']['perfection'] , fill= (0,0,0) ,font = font)
+            
+            asset = member.avatar.replace(size = 128)
+
+            data = BytesIO(await asset.read())
+
+            pfp = Image.open(data)
+
+            pfp = pfp.resize((150,150))
+
+            perfeição.paste(pfp, (144,52))
+            
+            perfeição.save('./images/img/perfeicao.png')
+
+            await ctx.respond(file = discord.File('./images/img/perfeicao.png'))
         
-        asset = member.avatar.replace(size = 128)
+        else:
 
-        data = BytesIO(await asset.read())
-
-        pfp = Image.open(data)
-
-        pfp = pfp.resize((150,150))
-
-        perfeição.paste(pfp, (144,52))
-        
-        perfeição.save('./images/img/perfeicao.png')
-
-        await ctx.respond(file = discord.File('./images/img/perfeicao.png'))
-
-    @slash_command(name = 'naughty', description = 'Cria uma foto do meliodas safadão')
-    @option(name = 'member', description = 'Mencione o membro')
-    @commands.cooldown(1,5,commands.BucketType.user)
-    async def safadão(self, ctx, member: discord.Member):
-
-        escolha = random.choice(['1','2','3','4'])
-
-        safadão = Image.open(f'./images/images/{escolha}.jpeg')
-
-        asset = ctx.author.avatar.replace(size = 128)
-
-        data = BytesIO(await asset.read())
-
-        pfp = Image.open(data)
-
-        asset2 = member.avatar.replace(size = 128)
-
-        data2 = BytesIO(await asset2.read())
-
-        pfp2 = Image.open(data2)
-        
-        if escolha == '1':
-            
-            pfp = pfp.resize((50,50))
-
-            safadão.paste(pfp, (142,53))
-
-            pfp2 = pfp2.resize((50,50))
-
-            safadão.paste(pfp2, (102,35))
-
-            safadão.save('./images/img/safadao.png')
-
-        elif escolha == '2':
-
-            pfp = pfp.resize((100,100))
-
-            safadão.paste(pfp, (139,20))
-
-            pfp2 = pfp2.resize((20,20))
-
-            safadão.paste(pfp2, (95,50))
-
-            safadão.save('./images/img/safadao.png')
-
-        elif escolha == '3':
-
-            pfp = pfp.resize((81,81))
-
-            safadão.paste(pfp, (339,51))
-            
-            pfp2 = pfp2.resize((79,79))
-
-            safadão.paste(pfp2, (238,47))
-
-            safadão.save('./images/img/safadao.png')
-
-        elif escolha == '4':
-
-            pfp = pfp.resize((100,100))
-
-            safadão.paste(pfp, (135,70))
-            
-            pfp2 = pfp2.resize((100,100))
-            
-            safadão.paste(pfp2, (308,10))
-
-            safadão.save('./images/img/safadao.png')
-
-        await ctx.respond(file = discord.File('./images/img/safadao.png'))
+            await ctx.respond(t['args']['notvote'])
 
     @slash_command(name = 'cat', description = 'Envia uma imagem de gato aleatoria')
     @commands.cooldown(1,5,commands.BucketType.user)
     async def cat(self,ctx):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -198,20 +171,9 @@ class images(commands.Cog):
     @perfeição.error
     async def beg_error(self, ctx, error):
 
-        t = await translate(ctx.guild)
-
-        if isinstance(error, commands.CommandOnCooldown):
-
-            cd = round(error.retry_after)
-
-            if cd == 0:
-
-                cd = 1
-
-            await ctx.respond(f':x: || {t["args"]["mod"]["cooldown"].format(better_time(cd))}', ephemeral = True)
-
-    @safadão.error
-    async def beg_error(self, ctx, error):
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -228,6 +190,10 @@ class images(commands.Cog):
     @conquistamine.error
     async def beg_error(self, ctx, error):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         if isinstance(error, commands.CommandOnCooldown):
@@ -242,6 +208,10 @@ class images(commands.Cog):
 
     @procurado.error
     async def beg_error(self, ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 

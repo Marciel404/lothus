@@ -1,37 +1,48 @@
-import discord
+import discord, requests
 
 from discord.ext import commands
 from discord import slash_command, option
 from db.moderation import *
-from db.economy import *
 from utils.defs import *
 from classes.selectbuttons import *
 
 class moderation(commands.Cog):
+
     def __init__(self, bot:commands.Bot):
+
         self.bot = bot
 
     @slash_command(name = 'setlang', description = 'Define o idioma do bot')
-    @commands.has_permissions(manage_guild = True)
+    @commands.has_guild_permissions(manage_guild = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def setlang(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
-        await ctx.respond(t['args']['lang']['select'], view = discord.ui.View(setlang(self.bot, ctx.author,ctx.guild)), ephemeral = True)
+        await ctx.respond(t['args']['lang']['select'], view = discord.ui.View(setlang(self.bot, ctx.author,t)), ephemeral = True)
 
     @slash_command(name = 'setlogs', description = 'Define um canal de logs')
-    @commands.has_permissions(manage_guild = True)
+    @commands.has_guild_permissions(manage_guild = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def setlogs(self, ctx):
 
-        await ctx.respond('',view = discord.ui.View(setlog(self.bot,ctx.author,ctx.guild)), ephemeral = True)
+        t = await translate(ctx.guild)
+
+        await ctx.respond('',view = discord.ui.View(setlog(self.bot,ctx.author,t)), ephemeral = True)
 
     @slash_command(name = 'autorole', description = 'Define um cargo para o auto role')
     @option(name = 'role', description = 'Escolha o cargo')
-    @commands.has_permissions(manage_guild = True)
+    @commands.has_guild_permissions(manage_guild = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def autorole(self, ctx, role: discord.Role = None):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -50,10 +61,14 @@ class moderation(commands.Cog):
     @slash_command(name = 'kick', description = 'Expulsa uma pessoa do server')
     @option(name = 'member', description = 'Escolha o membro a expulsar')
     @option(name = 'reason', description = 'Motivo para banir')
-    @commands.has_permissions(kick_members = True)
-    @commands.bot_has_permissions(kick_members = True)
+    @commands.has_guild_permissions(kick_members = True)
+    @commands.bot_has_guild_permissions(kick_members = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def kick(self, ctx, member: discord.Member, *,reason=None):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -66,10 +81,14 @@ class moderation(commands.Cog):
     @slash_command(name = 'ban', description = 'Bane um membro do server')
     @option(name = 'member', description = 'Escolha um membro a banir')
     @option(name = 'reason', description = 'Motivo de banir')
-    @commands.has_permissions(ban_members = True)
-    @commands.bot_has_permissions(ban_members = True)
+    @commands.has_guild_permissions(ban_members = True)
+    @commands.bot_has_guild_permissions(ban_members = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def Ban(self, ctx, member: discord.Member, *,reason=None):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -81,10 +100,14 @@ class moderation(commands.Cog):
 
     @slash_command(name = 'clear', description = 'Limpa o chat')
     @option(name = 'qnt', description = 'Escolha uma quantidade de mensagem a limpar')
-    @commands.has_permissions(manage_channels = True)
-    @commands.bot_has_permissions(manage_channels = True)
+    @commands.has_guild_permissions(manage_channels = True)
+    @commands.bot_has_guild_permissions(manage_channels = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def clear(self, ctx, qnt: int):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
             
@@ -109,12 +132,16 @@ class moderation(commands.Cog):
     @slash_command(name = 'unban', description = 'Desbane um membro')
     @option(name = 'id', description = 'Id do membro')
     @option(name = 'reason', description = 'Motivo de desbanir')
-    @commands.has_permissions(ban_members = True)
-    @commands.bot_has_permissions(ban_members = True)
+    @commands.has_guild_permissions(ban_members = True)
+    @commands.bot_has_guild_permissions(ban_members = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def unban(self, ctx, id: int, *, reason = None):
 
         l1 = self.bot.get_channel(self.bot.get_channel(mod.find_one({"_id": ctx.guild.id})["logmod"]))
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -147,8 +174,13 @@ class moderation(commands.Cog):
     @slash_command(name = 'add_warning', description = 'Da uma advertencia para um membro')
     @option(name = 'member', description = 'Mencione o membro')
     @option(name = 'reason', description = 'Motivo da advertencia')
-    @commands.has_permissions(kick_members = True)
+    @commands.has_guild_permissions(kick_members = True)
+    @commands.guild_only()
     async def adv(self, ctx, member: discord.Member, reason):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -172,7 +204,23 @@ class moderation(commands.Cog):
 
                 await ctx.respond(t['args']['advsucess'].format(member.mention), ephemeral = True)
 
-                await self.bot.get_channel(db['lmod']['id']).send(embed = e)
+                channel = self.bot.get_channel(db['lmod']['id'])
+
+                try:
+
+                    w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+
+                    await w.send(embed = e)
+                
+                except:
+
+                    webhook = await channel.create_webhook(name = 'Lothus', avatar = await self.bot.user.avatar.read(), reason = f'Log')
+
+                    await logs('lmod',True,ctx.guild,db['lmod']['id'], webhook.id)
+
+                    w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+
+                    await w.send(embed = e)
             
         except:
 
@@ -182,8 +230,12 @@ class moderation(commands.Cog):
 
     @slash_command(name = 'remove_warning', description = 'Remove uma advertencia de um membro')
     @option(name = 'member', description = 'Mencione o membro')
-    @commands.has_permissions(kick_members = True)
+    @commands.has_guild_permissions(kick_members = True)
     async def rmvadv(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -219,7 +271,23 @@ class moderation(commands.Cog):
 
                     await ctx.respond(t['args']['rmvadvsucess'].format(member.mention), ephemeral = True)
 
-                    await self.bot.get_channel(db['lmod']['id']).send(embed = e)
+                    channel = self.bot.get_channel(db['lmod']['id'])
+
+                    try:
+
+                        w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+
+                        await w.send(embed = e)
+                    
+                    except:
+
+                        webhook = await channel.create_webhook(name = 'Lothus', avatar = await self.bot.user.avatar.read(), reason = f'Log')
+
+                        await logs('lmod',True,ctx.guild,db['lmod']['id'], webhook.id)
+
+                        w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+
+                        await w.send(embed = e)
                 
             except:
 
@@ -231,8 +299,260 @@ class moderation(commands.Cog):
 
             await ctx.respond(t['args']['notadv'],ephemeral = True)
 
+    @slash_command(name = 'force_move', description = 'Move um membro para a sua call privada')
+    @option(name = 'membro', description = 'Escolha o membro para mover para uma call')
+    @option(name = 'canal', description = 'Escolha o canal para mover o membro')
+    @commands.has_guild_permissions(move_members = True)
+    async def fmv(self, ctx, member: discord.Member, canal: discord.VoiceChannel):
+
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        o = requests.get(headers = {"Authorization": configData['topauth']},url = f'https://top.gg/api/bots/1012121641947517068/check?userId={ctx.author.id}')
+
+        if o.json()['voted'] == 1:
+
+            call = self.bot.get_channel(canal.id)
+
+            if member.voice == None:
+
+                await ctx.respond(t['args']['mod']['notcall'].formmat(member.mention), ephemeral = True)
+
+                return
+
+            await member.move_to(call)
+
+            await ctx.respond(t['args']['mod']['mvcall'].formart(member.mention, call.mention), ephemeral = True)
+        
+        else:
+
+            await ctx.respond(t['args']['notvote'])
+
+    @slash_command(name = 'force_disconnect', description = 'Desconecta uma pessoa da call')
+    @option(name = 'member', description = 'Escolha o membro para desconectar da call')
+    @commands.has_guild_permissions(move_members = True)
+    async def fdsc(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        o = requests.get(headers = {"Authorization": configData['topauth']},url = f'https://top.gg/api/bots/1012121641947517068/check?userId={ctx.author.id}')
+
+        if o.json()['voted'] == 1:
+
+            if member.voice == None:
+
+                await ctx.respond(t['args']['mod']['notcall'].formmat(member.mention), ephemeral = True)
+
+                return
+
+            await member.move_to(None)
+
+            await ctx.respond(t['args']['mod']['dsccall'].formart(member.mention), ephemeral = True)
+        
+        else:
+
+            await ctx.respond(t['args']['notvote'])
+
+    @slash_command(name = 'embed', description = 'Envia uma embed em um chat desejado')
+    @option(name = 'channel', description = 'Escolha o chat para enviar a embed')
+    @option(name = 'title', description = 'Escreva o titulo da embed')
+    @option(name = 'link_image', description = 'Escolha a imagem da embed')
+    @option(name = 'mention', description = 'Mencione um cargo para mencionar na embed')
+    @option(name = 'content', description = 'Escreva o conteudo da embed')
+    @commands.has_guild_permissions(manage_channels = True)
+    async def embed(self, ctx, channel: discord.TextChannel = None, title = None, img = None, mention: discord.Role = None, *, content = None):
+
+        if ctx.guild == None:
+            
+            return
+
+        if channel == None:
+
+            channel = ctx.channel
+
+        if title == None:
+
+            title = ''
+
+        if img == None:
+
+            img = ''
+
+        if content == None:
+
+            content = ''
+
+        if mention == None:
+
+            mention == ''
+
+        else: 
+
+            mention = mention.mention
+
+        e = discord.Embed(title = title, description = content, colour = 0x4B0082)
+
+        e.set_image(url = img)
+
+        e.set_footer(text = f'{ctx.guild.name}, author: {ctx.author.name}', icon_url = ctx.guild.icon)
+
+        channel2 = self.bot.get_channel(channel.id)
+
+        await channel2.send(mention,embed = e)
+
+    @discord.slash_command(name = 'editembed', description = 'Edita uma embed já enviada')
+    @discord.option(name = 'channel', description = 'Envie o id do canal')
+    @discord.option(name = 'embedid', description = 'Envie o id da embed')
+    @discord.option(name = 'title', description = 'Escreva o titulo da embed')
+    @discord.option(name = 'img', description = 'Escolha a imagem da embed')
+    @option(name = 'mention', description = 'Mencione um cargo para mencionar na embed')
+    @discord.option(name = 'content', description = 'Escreva o conteudo da embed')
+    @commands.has_guild_permissions(manage_channels = True)
+    async def editembed(self, ctx, channel: discord.TextChannel = None, embedid = None, title = None, img = None, mention: discord.Role = None, *, content = None):
+
+        if ctx.guild == None:
+            
+            return
+
+        if channel == None:
+
+            channel = ctx.channel
+
+        if title == None:
+
+            title = ''
+
+        if img == None:
+
+            img = ''
+
+        if content == None:
+
+            content = ''
+
+        if mention == None:
+
+            mention == ''
+
+        else: 
+
+            mention = mention.mention
+
+        mensagem = await channel.fetch_message(int(embedid))
+
+        e = discord.Embed(title = title, description = content, colour = 0x4B0082)
+
+        e.set_image(url = img)
+
+        e.set_footer(text = f'{ctx.guild.name} author: {ctx.author.name}', icon_url = ctx.guild.icon)
+
+        await mensagem.edit(mention,embed = e)
+
+    @fmv.error
+    async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        if isinstance(error, commands.MissingPermissions):
+            
+            await ctx.respond(f":x: || {t['args']['mod']['notpermission']}", ephemeral = True)
+        
+        if isinstance(error, commands.CommandOnCooldown):
+
+            cd = round(error.retry_after)
+
+            if cd == 0:
+
+                cd = 1
+
+            await ctx.respond(f':x: || {t["args"]["mod"]["cooldown"].format(better_time(cd))}', ephemeral = True)
+
+    @fdsc.error
+    async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        if isinstance(error, commands.MissingPermissions):
+            
+            await ctx.respond(f":x: || {t['args']['mod']['notpermission']}", ephemeral = True)
+        
+        if isinstance(error, commands.CommandOnCooldown):
+
+            cd = round(error.retry_after)
+
+            if cd == 0:
+
+                cd = 1
+
+            await ctx.respond(f':x: || {t["args"]["mod"]["cooldown"].format(better_time(cd))}', ephemeral = True)
+    
+    @editembed.error
+    async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        if isinstance(error, commands.MissingPermissions):
+            
+            await ctx.respond(f":x: || {t['args']['mod']['notpermission']}", ephemeral = True)
+        
+        if isinstance(error, commands.CommandOnCooldown):
+
+            cd = round(error.retry_after)
+
+            if cd == 0:
+
+                cd = 1
+
+            await ctx.respond(f':x: || {t["args"]["mod"]["cooldown"].format(better_time(cd))}', ephemeral = True)
+
+    @embed.error
+    async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
+
+        t = await translate(ctx.guild)
+
+        if isinstance(error, commands.MissingPermissions):
+            
+            await ctx.respond(f":x: || {t['args']['mod']['notpermission']}", ephemeral = True)
+        
+        if isinstance(error, commands.CommandOnCooldown):
+
+            cd = round(error.retry_after)
+
+            if cd == 0:
+
+                cd = 1
+
+            await ctx.respond(f':x: || {t["args"]["mod"]["cooldown"].format(better_time(cd))}', ephemeral = True)
+
     @setlang.error
     async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -253,6 +573,10 @@ class moderation(commands.Cog):
     @adv.error
     async def setlogs_error(self,ctx, error):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         if isinstance(error, commands.MissingPermissions):
@@ -271,6 +595,10 @@ class moderation(commands.Cog):
     
     @rmvadv.error
     async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -291,6 +619,10 @@ class moderation(commands.Cog):
     @autorole.error
     async def setlogs_error(self,ctx, error):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         if isinstance(error, commands.MissingPermissions):
@@ -309,6 +641,10 @@ class moderation(commands.Cog):
     
     @setlogs.error
     async def setlogs_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -329,6 +665,10 @@ class moderation(commands.Cog):
 
     @Ban.error
     async def ban_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -352,6 +692,10 @@ class moderation(commands.Cog):
 
     @unban.error
     async def unban_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -379,6 +723,10 @@ class moderation(commands.Cog):
 
     @clear.error
     async def clear_error(self,ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
         

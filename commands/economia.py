@@ -16,6 +16,10 @@ class economia(commands.Cog):
     @commands.cooldown(5, 7200, commands.BucketType.user)
     async def rolar(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         rand = random.randint(0,10)
@@ -47,6 +51,10 @@ class economia(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def LOTHCOINS(self, ctx, member: discord.Member = None):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
             
         if member == None:
@@ -75,6 +83,10 @@ class economia(commands.Cog):
     @option(name = 'member', description = 'Ecolha o membro a transferir')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def Transferir(self, ctx, member: discord.Member, lothcoins: int):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 
@@ -131,6 +143,10 @@ class economia(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def loteria(self, ctx, lothcoins:int):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
             
         if bank.count_documents({"_id": ctx.author.id}) == 0:
@@ -184,6 +200,10 @@ class economia(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def Caraoucoroaap(self, ctx, lothcoins: int, escolha):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
         
         bal = bank.find_one({"_id": ctx.author.id})
@@ -224,6 +244,10 @@ class economia(commands.Cog):
     @commands.cooldown(1,5, commands.BucketType.user)
     async def LOTHCOINSTOP(self, ctx):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         rankings = bank.find().sort("LOTHCOINS",-1)
@@ -252,6 +276,10 @@ class economia(commands.Cog):
 
     @rolar.error
     async def error(self, ctx, error):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 

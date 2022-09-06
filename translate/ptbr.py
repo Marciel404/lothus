@@ -4,7 +4,11 @@ ptbr = {
 
         'adv': 'Advertencia',
 
-        'adv': 'Remoção de advertencia',
+        'notvote': 'Para usar esse comando você precisa votar no top.gg, use /vote',
+
+        'rmvadv': 'Remoção de advertencia',
+
+        'random': 'Seu numero escolhido foi',
 
         'advsucess': '{} advertido com sucesso',
 
@@ -34,6 +38,8 @@ ptbr = {
             'enter': 'entrou na call',
             'exit': 'saiu da call',
             'semove': '{0} se moveu da call {1} para a call {2}',
+            'semute': 'mutou o microfone no',
+            'sedesmute': 'desmutou o microfone no',
 
         },
 
@@ -184,9 +190,15 @@ um server de suporte, está tudo aqui a baixo''',
 
         'mod': {
 
+            'dsccall': '{} desconectado com sucesso',
+            
+            'mvcall': '{} movido para {}',
+
+            'notcall': '{} não está em um canal de voz',
+
             'adv': '{} foi advertido por {}\nMotivo:{}',
 
-            'rmvadv': '{1} foi advertido por {0}',
+            'rmvadv': '{0} removeu a adivertencia de {1}',
 
             'logban': 'Membro banido: <@{0}>\nQuem baniu: {1}\nMotivo: {2}\nID: {3}',
             'logkick': 'Membro expulso: <@{0}>\nQuem expulsou: {1}\nMotivo: {2}\nID: {3}',
@@ -213,6 +225,7 @@ um server de suporte, está tudo aqui a baixo''',
             'lmod': 'Log de moderação',
             'lvoice': 'Log de voz',
             'ltxt': 'log de texto',
+            'lmic': 'Log de microfone',
             'setlog': 'Chat de logs setado com sucesso para',
             'unsetlog': 'Chat de logs removido',
             'setautorole': 'Cargo do autorole setado com sucesso para',
@@ -269,6 +282,10 @@ AutoRole - (Gerenciar canais) - Seta um cargo para Autorole
 SetLang - (Gerenciar servidor) - Seta a lingua do bot
 AddWarning - (Expulsar membros) - Da uma advertencia em um membro
 RemoveWarning - (Expulsar membros) - Remove uma advertencia de um membro
+ForceMove - (Mover membros) - Move um membro de uma call para outra
+ForceDisconnect - (Mover membros) - Desconecta um membro de uma call
+Embed - (Gerenciar canais) - Envia uma embed no chat desejado
+EditEmbed - (Gerenciar canais) - Edita uma embed já enviada no chat desejado
 '''
 },
         'general':{

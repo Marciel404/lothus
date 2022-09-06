@@ -1,4 +1,4 @@
-import discord
+import discord, requests
 
 from discord.ext import commands
 from discord import slash_command, option
@@ -15,37 +15,55 @@ class membersreport(commands.Cog):
     @option(name = 'membro', description = 'Escolha o membro a remover a advertencia')
     async def veradv(self, ctx, member: discord.Member):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
-        if advdb.count_documents({ "_id":f'{ctx.guild.id}_{member.id}'}) == 1:
+        o = requests.get(headers = {"Authorization": configData['topauth']},url = f'https://top.gg/api/bots/1012121641947517068/check?userId={ctx.author.id}')
 
-            rankings = advdb.find_one({'_id': f'{ctx.guild.id}_{member.id}'})
+        if o.json()['voted'] == 1:
 
-            embed = discord.Embed(title = f"***Top mais ricos***")
+            try:
 
-            i = 1
+                if advdb.count_documents({ "_id":f'{ctx.guild.id}_{member.id}'}) == 1:
 
-            while True:
+                    rankings = advdb.find_one({'_id': f'{ctx.guild.id}_{member.id}'})
 
-                hgc = rankings[f'{t["args"]["adv"]}{i}']
+                    embed = discord.Embed(title = f"***{member.name}***")
 
-                embed.add_field(name=f"{t['args']['adv']}{i}", value=t["args"]["mod"]["logadv"].format(hgc[0],hgc[1],hgc[2]), inline=False)
+                    i = 1
 
-                embed.set_footer(text=f"{ctx.guild}", icon_url=f"{ctx.guild.icon}")
+                    while True:
 
-                if i == advdb.find_one({'_id': f'{ctx.guild.id}_{member.id}'})['qnt']:
+                        hgc = rankings[f'{t["args"]["adv"]}{i}']
 
-                    break
+                        embed.add_field(name=f"{t['args']['adv']}{i}", value=t["args"]["mod"]["logadv"].format(hgc[0],hgc[1],hgc[2]), inline=False)
 
-                else:
+                        embed.set_footer(text=f"{ctx.guild}", icon_url=f"{ctx.guild.icon}")
 
-                    i += 1
+                        if i == advdb.find_one({'_id': f'{ctx.guild.id}_{member.id}'})['qnt']:
 
-            await ctx.respond(embed=embed)
+                            break
 
-        else: 
+                        else:
 
-            await ctx.respond(t['args']['notadv'], ephemeral = True)
-        
+                            i += 1
+
+                    await ctx.respond(embed=embed)
+
+                else: 
+
+                    await ctx.respond(t['args']['notadv'], ephemeral = True)
+                    
+            except: 
+
+                await ctx.respond(t['args']['notadv'], ephemeral = True)
+
+        else:
+
+            await ctx.respond(t['args']['notvote'])
+            
 def setup(bot:commands.Bot):
     bot.add_cog(membersreport(bot))

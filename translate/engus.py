@@ -6,6 +6,10 @@ eng = {
 
         'rmvadv': 'warning removal',
 
+        'notvote': 'To use this command you need to vote on top.gg, use /vote',
+
+        'random': 'Your chosen number was',
+
         'advsucess': '{} successfully warned',
 
         'notadv': 'This member not have warnings',
@@ -34,6 +38,8 @@ eng = {
             'enter': 'joined the call',
             'exit': 'left the call',
             'semove': '{0} moved from the call {1} for the call {2}',
+            'semute': 'muted the microphone on',
+            'sedesmute': 'unmuted the microphone on',
 
         },
 
@@ -184,9 +190,15 @@ a support server, it's all down here''',
 
         'mod': {
 
+            'dsccall': '{} successfully disconnected',
+
+            'mvcall': '{} moved to {}',
+
+            'notcall': '{} is not on a voice channel',
+
             'adv': '{} was warned by {}\nReason:{}',
 
-            'rmvadv': '{1} removed warning from {0}',
+            'rmvadv': '{} removed warning from {}',
 
             'logban': 'Banned member: <@{0}>\nWho banned: {1}\nReason: {2}\nID: {3}',
             'logkick': 'Expelled member: <@{0}>\nWho expelled: {1}\nReason: {2}\nID: {3}',
@@ -213,6 +225,7 @@ a support server, it's all down here''',
             'lmod': 'Moderation log',
             'lvoice': 'Voice log',
             'ltxt': 'Text log',
+            'lmic': 'Mic log',
             'setlog': 'Chat logs successfully set to',
             'unsetlog': 'Log chat removed',
             'setautorole': 'Autorole post successfully set to',
@@ -269,6 +282,10 @@ AutoRole - (Manage channels) - Sets a role to Autorole
 SetLang - (Manage Server) - Sets the bot's language
 AddWarning - (Kick Members) - Gives a member a warning
 RemoveWarning - (Remove Members) - Removes a warning from a member
+ForceMove - (Move members) - Moves a member from one call to another
+ForceDisconnect - (Move members) - Disconnects a member from a call
+Embed - (Manage channels) - Sends an embed in the desired chat
+EditEmbed - (Manage channels) - Edit an embed already sent in the desired chat
 '''
 },
         'general':{
@@ -329,9 +346,9 @@ wanted - Create a wanted poster
         },
         'actions':{
             
-            'name': 'Ações',
+            'name': 'Actions',
 
-            'description': 'Comandos de ação',
+            'description': 'Actions commands',
 
             'content':'''
 Hug - Hugs a member

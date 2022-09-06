@@ -13,6 +13,10 @@ class feedback(commands.Cog):
     @commands.cooldown(1,5, commands.BucketType.user)
     async def sugest(self, ctx, *, sugestão):
 
+        if ctx.guild == None:
+            
+            return
+
         t = await translate(ctx.guild)
 
         user = self.bot.get_channel(int(1012123748637343756))
@@ -28,6 +32,10 @@ class feedback(commands.Cog):
     @option(name = 'report', description = 'Escreva o report')
     @commands.cooldown(1,5, commands.BucketType.user)
     async def report(self, ctx, *, report):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
         
