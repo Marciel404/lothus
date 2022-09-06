@@ -4,5 +4,9 @@ configData = {
 
     "mongokey": "",
 
-    "prefix": ""
+    "prefix": "",
+
+    "webhtop": "",
+    
+    "topauth": ""
 }
