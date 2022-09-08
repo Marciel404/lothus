@@ -1,5 +1,6 @@
-from utils.loader import Client, configData
+from utils.loader import client
+from utils.configs import configData
 
 if __name__ == '__main__':
 
-    Client(configData['token']).__run__()
+    client(configData['token']).__run__()
