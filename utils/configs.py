@@ -1,6 +1,8 @@
 configData = {
 
     "token": "",
+    
+    "database": "",
 
     "mongokey": "",
 
