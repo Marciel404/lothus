@@ -353,7 +353,7 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
         name = self.bot.get_emoji(971487187361218620)
 
-        e = discord.Embed(title = {t["args"]["botinfo"]["mif"]})
+        e = discord.Embed(title = t["args"]["botinfo"]["mif"])
 
         e.set_thumbnail(url = self.bot.user.avatar.url)
 
@@ -363,13 +363,9 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
         e.add_field(name = '════════════', value = '════════════', inline = False)
 
-        e.add_field(name = f'{disocrd} {t["args"]["botinfo"]["version"]}', value = discord.__version__, inline = False)
+        e.add_field(name = f'{disocrd} {t["args"]["botinfo"]["version"]}', value = discord.__version__, inline = True)
 
-        e.add_field(name = '════════════', value = '════════════', inline = False)
-
-        e.add_field(name = f'{pyton} {t["args"]["botinfo"]["pyversion"]}', value = platform.python_version())
-
-        e.add_field(name = f'{bot} {t["args"]["botinfo"]["cmd"]}', value = len(self.bot.application_commands))
+        e.add_field(name = f'{pyton} {t["args"]["botinfo"]["pyversion"]}', value = platform.python_version(), inline = True)
 
         e.add_field(name = '════════════', value = '════════════', inline = False)
 

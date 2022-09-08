@@ -110,7 +110,7 @@ class eventslogs(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_state_update(self, member:discord.Member, antes:discord.VoiceState, depois:discord.VoiceState):
 
-        if antes.guild == None:
+        if member.guild == None:
             
             return
 

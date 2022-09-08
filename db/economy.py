@@ -3,7 +3,7 @@ from utils.configs import configData
 
 cluster = MongoClient(configData['mongokey'])
 
-db = cluster["LTH"]
+db = cluster[configData['database']]
 
 bank = db['BANK']
 

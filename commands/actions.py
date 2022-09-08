@@ -221,7 +221,7 @@ class actions(commands.Cog):
     async def pat(self, ctx, member: discord.Member):
 
         if ctx.guild == None:
-            
+
             return
 
         t = await translate(ctx.guild)
