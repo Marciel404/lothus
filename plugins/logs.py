@@ -13,17 +13,13 @@ class eventslogs(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self, message:discord.Message):
 
-        if message.guild == None:
-            
-            return
-
-        t = await translate(message.guild)
-
         try:
 
             db = mod.find_one({'_id': message.guild.id})
 
             if db['ltxt']['True?'] == True:
+
+                t = translates(message.guild)
 
                 channel = self.bot.get_channel(db['ltxt']['id'])
 
@@ -57,21 +53,17 @@ class eventslogs(commands.Cog):
         except:
 
             None
-    
+
     @commands.Cog.listener()
     async def on_message_edit(self, antes:discord.Message, depois:discord.Message):
-
-        if antes.guild == None:
-            
-            return
-
-        t = await translate(antes.guild)
 
         try:
 
             db = mod.find_one({'_id':antes.guild.id})
 
             if db['ltxt']['True?'] == True:
+
+                t = translates(antes.guild)
 
                 channel = self.bot.get_channel(db['ltxt']['id'])
 
@@ -110,17 +102,13 @@ class eventslogs(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_state_update(self, member:discord.Member, antes:discord.VoiceState, depois:discord.VoiceState):
 
-        if member.guild == None:
-            
-            return
-
         try:
 
             db = mod.find_one({'_id':member.guild.id})
 
             if db['lvoice']['True?'] == True:
 
-                t = await translate(member.guild)
+                t = translates(member.guild)
 
                 channel = self.bot.get_channel(db['lvoice']['id'])
 
@@ -216,7 +204,7 @@ class eventslogs(commands.Cog):
 
             if db['lmic']['True?'] == True:
 
-                t = await translate(member.guild)
+                t = translates(member.guild)
 
                 if antes.self_mute:
 

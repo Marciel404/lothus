@@ -9,7 +9,7 @@ class events(commands.Cog):
     def __init__(self, bot:commands.Bot):
 
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_guild_join(self, guild:discord.Guild):
 
@@ -30,13 +30,13 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member:discord.Member):
 
-        t = await translate(member.guild)
-
         try:
 
             db = mod.find_one({'_id':member.guild.id})
 
             if db['autorole']['True?'] == True:
+
+                t = translates(member.guild)
 
                 try:
 

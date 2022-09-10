@@ -407,13 +407,13 @@ class moderation(commands.Cog):
 
         await channel2.send(mention,embed = e)
 
-    @discord.slash_command(name = 'editembed', description = 'Edita uma embed já enviada')
-    @discord.option(name = 'channel', description = 'Envie o id do canal')
-    @discord.option(name = 'embedid', description = 'Envie o id da embed')
-    @discord.option(name = 'title', description = 'Escreva o titulo da embed')
-    @discord.option(name = 'img', description = 'Escolha a imagem da embed')
+    @slash_command(name = 'editembed', description = 'Edita uma embed já enviada')
+    @option(name = 'channel', description = 'Envie o id do canal')
+    @option(name = 'embedid', description = 'Envie o id da embed')
+    @option(name = 'title', description = 'Escreva o titulo da embed')
+    @option(name = 'img', description = 'Escolha a imagem da embed')
     @option(name = 'mention', description = 'Mencione um cargo para mencionar na embed')
-    @discord.option(name = 'content', description = 'Escreva o conteudo da embed')
+    @option(name = 'content', description = 'Escreva o conteudo da embed')
     @commands.has_guild_permissions(manage_channels = True)
     async def editembed(self, ctx, channel: discord.TextChannel = None, embedid = None, title = None, img = None, mention: discord.Role = None, *, content = None):
 
