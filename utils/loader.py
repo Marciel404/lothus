@@ -1,7 +1,6 @@
 import discord,os
 
-from discord.ext.commands import Bot as BotBase
-from .configs import configData
+from discord.ext import commands
 
 class loadcogs():
 
@@ -9,7 +8,7 @@ class loadcogs():
 
         self.bot = bot
 
-    def __loader__(self):
+    def load(self):
 
         for filename in os.listdir('./plugins'):
 
@@ -23,16 +22,25 @@ class loadcogs():
 
                 self.bot.load_extension('commands.{0}'.format(filename[:-3]))
 
-class client(BotBase):
+class client(commands.Bot):
 
-    def __init__(self, token):
+    def __init__(self, token, prefix):
 
         self.token = token
         
-        super().__init__(command_prefix = configData['prefix'],  intents = discord.Intents.all())
+        super().__init__(
 
+            command_prefix = prefix,
+
+            help_command = None,
+
+            intents = discord.Intents.all(),
+
+            case_insensitive = True
+        )
+    
     async def on_connect(self):
-        
+
         await self.change_presence(activity=discord.Game(name="/help"))
 
         print(f'Eu estou online como {self.user}')
@@ -41,6 +49,6 @@ class client(BotBase):
 
     def __run__(self):
 
-        loadcogs(self).__loader__()
+        loadcogs(self).load()
 
         self.run(self.token)
