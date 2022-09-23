@@ -36,13 +36,13 @@ class events(commands.Cog):
 
             if db['autorole']['True?'] == True:
 
-                t = translates(member.guild)
-
                 try:
 
                     await member.add_roles(discord.utils.get(member.guild.roles, id = db['autorole']['id']))
                 
                 except:
+
+                    t = translates(member.guild)
 
                     try:
 

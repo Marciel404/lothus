@@ -12,13 +12,9 @@ class economia(commands.Cog):
 
         self.bot = bot
 
-    @discord.slash_command(name = 'roll', description = 'Você pode ganhar de 0 a 2000 LothCoins')
+    @discord.slash_command(name = 'roll', description = 'Você pode ganhar de 0 a 2000 LothCoins', guild_only = True)
     @commands.cooldown(5, 7200, commands.BucketType.user)
     async def rolar(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -46,14 +42,10 @@ class economia(commands.Cog):
 
             await ctx.respond(f'{ctx.author.name}, {t["args"]["gan"]} {r} LothCoins')
 
-    @slash_command(name = 'lothcoins', description = 'Mostra quantas LothCoins uma pessoa tem')
+    @slash_command(name = 'lothcoins', description = 'Mostra quantas LothCoins uma pessoa tem', guild_only = True)
     @option(name = 'member', description = 'Escolha um membro')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def LOTHCOINS(self, ctx, member: discord.Member = None):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
             
@@ -79,14 +71,10 @@ class economia(commands.Cog):
 
         await ctx.respond(embed = em)
 
-    @slash_command(name = 'transfer', description = 'Transfere LothCoins para outro membro')
+    @slash_command(name = 'transfer', description = 'Transfere LothCoins para outro membro', guild_only = True)
     @option(name = 'member', description = 'Ecolha o membro a transferir')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def Transferir(self, ctx, member: discord.Member, lothcoins: int):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -138,14 +126,10 @@ class economia(commands.Cog):
 
         await ctx.respond(t['args']['economy']['vct'].format(lothcoins,member.mention))
 
-    @slash_command(name = 'slot_machine', description = 'Aposta no caça níquel')
+    @slash_command(name = 'slot_machine', description = 'Aposta no caça níquel', guild_only = True)
     @option(name = 'lothcoins', description = 'Escolha a quantidade a jogar')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def loteria(self, ctx, lothcoins:int):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
             
@@ -195,14 +179,10 @@ class economia(commands.Cog):
 
             await ctx.respond( t['args']['economy']['lost'] + f' {lothcoins} LothCoins', ephemeral = True)
 
-    @slash_command(name = 'flipcoinbet', description = 'Aposta no cara ou coroa')
+    @slash_command(name = 'flipcoinbet', description = 'Aposta no cara ou coroa', guild_only = True)
     @option(name = 'lothcoins', description = 'Escolha a quantidade a apostar')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def Caraoucoroaap(self, ctx, lothcoins: int, escolha):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
         
@@ -240,13 +220,9 @@ class economia(commands.Cog):
 
             await update_bank(ctx.author, - lothcoins)
 
-    @slash_command(name = 'lothcoins_top', description = 'Mostra os mais ricos')
+    @slash_command(name = 'lothcoins_top', description = 'Mostra os mais ricos', guild_only = True)
     @commands.cooldown(1,5, commands.BucketType.user)
     async def LOTHCOINSTOP(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -276,10 +252,6 @@ class economia(commands.Cog):
 
     @rolar.error
     async def error(self, ctx, error):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 

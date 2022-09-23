@@ -1,4 +1,4 @@
-import discord, requests, random, aiohttp
+import discord, requests, random
 
 from discord.ext import commands
 from discord import slash_command, option
@@ -11,12 +11,9 @@ class actions(commands.Cog):
 
         self.bot = bot
 
-    @slash_command(name = 'flip_coin', description = 'Joga uma moeda de cara ou coroa')
+    @slash_command(name = 'flip_coin', description = 'Joga uma moeda de cara ou coroa', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     async def flipcoin(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -30,13 +27,10 @@ class actions(commands.Cog):
 
             await ctx.respond(t['args']['actions']['flip2'])
 
-    @slash_command(name = 'hug', description = 'hug one member')
+    @slash_command(name = 'hug', description = 'hug one member', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def hug(self, ctx, member: discord.Member):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -56,13 +50,10 @@ class actions(commands.Cog):
 
         await ctx.respond(content = f'{member.mention}',embed = kiss, view = huges(member,ctx.author))
 
-    @slash_command(name = 'kiss', description = 'kiss one member')
+    @slash_command(name = 'kiss', description = 'kiss one member', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def kiss(self, ctx, member: discord.Member):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -88,13 +79,10 @@ class actions(commands.Cog):
 
             await ctx.respond(content = f'{member.mention}',embed = kiss, view = kisses(member,ctx.author))
 
-    @slash_command(name = 'slap', description = 'Slap one member')
+    @slash_command(name = 'slap', description = 'Slap one member', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def slap(self, ctx, member: discord.Member):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -126,13 +114,10 @@ class actions(commands.Cog):
 
             await ctx.respond(content = f'{member.mention}',embed = kiss, view = slaps(member,ctx.author))
 
-    @slash_command(name = 'punch', description = 'Punch one member')
+    @slash_command(name = 'punch', description = 'Punch one member', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def punch(self, ctx, member: discord.Member):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -164,13 +149,10 @@ class actions(commands.Cog):
 
             await ctx.respond(content = f'{member.mention}',embed = kiss, view = punches(member,ctx.author))
 
-    @slash_command(name = 'bite', description = 'Bite one member')
+    @slash_command(name = 'bite', description = 'Bite one member', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def bite(self, ctx, member: discord.Member):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -190,13 +172,10 @@ class actions(commands.Cog):
 
         await ctx.respond(content = f'{member.mention}',embed = kiss, view = bites(member,ctx.author))
 
-    @slash_command(name = 'lick', description = 'Lick a member')
+    @slash_command(name = 'lick', description = 'Lick a member', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Mention member')
     async def lick(self, ctx, member: discord.Member):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -216,7 +195,8 @@ class actions(commands.Cog):
 
         await ctx.respond(content = f'{member.mention}',embed = kiss, view = lickes(member,ctx.author))
 
-    @slash_command(name = 'cafune', description = 'Faz um cafune em alguem')
+    @slash_command(name = 'cafune', description = 'Faz um cafune em alguem', guild_only = True)
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Mencione um member')
     async def pat(self, ctx, member: discord.Member):
 

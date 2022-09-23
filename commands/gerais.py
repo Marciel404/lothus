@@ -2,11 +2,10 @@ import discord, time, random,platform
 
 from discord.ext import commands
 from discord import slash_command, option
-from io import BytesIO
-from PIL import Image
 from utils.defs import *
 from classes.selectbuttons import *
 from db.economy import *
+from db.members import *
 
 class gerais(commands.Cog):
 
@@ -14,24 +13,17 @@ class gerais(commands.Cog):
 
         self.bot = bot
 
-    @slash_command(name = 'hello_world', description = 'Comandos de teste do Lothus')
+    @slash_command(guild_only = True, name = 'hello_world', description = 'Comandos de teste do Lothus')
+    @commands.cooldown(1,5, commands.BucketType.user)
     async def hello(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
         await ctx.respond(t["args"]["hello"])
 
-    @slash_command(name = 'help', description = 'Envia minha lista de comandos')
+    @slash_command(guild_only = True,name = 'help', description = 'Envia minha lista de comandos')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def help(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -42,14 +34,10 @@ class gerais(commands.Cog):
 
         await ctx.respond(embed = h, view = discord.ui.View(selecthelp(self.bot,ctx.author,t)))
 
-    @slash_command(name = 'random', description = 'Escolhe um numero aleatorio')
+    @slash_command(guild_only = True,name = 'random', description = 'Escolhe um numero aleatorio')
     @option(name = 'number', description = 'Coloque um numero')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def aleatorio(self, ctx,numero: int):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
         
@@ -57,13 +45,9 @@ class gerais(commands.Cog):
 
         await ctx.respond(f'{t["args"]["random"]} {dado}')
 
-    @slash_command(name = 'ping', description = 'Envia meu ping')
+    @slash_command(guild_only = True,name = 'ping', description = 'Envia meu ping')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def ping(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
         
         start_time = time.time()
 
@@ -77,32 +61,25 @@ class gerais(commands.Cog):
 
         description = f'''
 {t["args"]["ping"]}: {Ping}ms
-API: {round((end_time - start_time) * 1000)}ms''', 
+API: {round((end_time - start_time) * 1000)}ms
+''', 
 
         color = 0x2ecc71)
 
         await ctx.respond(embed = p4)
 
-    @slash_command(name = 'servers', description = "Envia em quantos servers eu esrou")
-    @commands.cooldown(2, 5, commands.BucketType.user)
+    @slash_command(guild_only = True,name = 'servers', description = "Envia em quantos servers eu esrou")
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def servers(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
         await ctx.respond(t["args"]["servers"]["s"].format(str(len(self.bot.guilds))))
 
-    @slash_command(name = 'server_info', description = 'Envia algumas informações do server')
+    @slash_command(guild_only = True,name = 'server_info', description = 'Envia algumas informações do server')
     @commands.cooldown(1, 5, commands.BucketType.user)
     @option(name = 'server', description = 'Envie o id do server')
     async def serverInfo(self, ctx, server: discord.Guild = None):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -174,14 +151,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
         await ctx.respond(embed = embed)
 
-    @slash_command(name = 'user_info', description = 'Envia algumas informações de um membro')
+    @slash_command(guild_only = True,name = 'user_info', description = 'Envia algumas informações de um membro')
     @commands.cooldown(1, 5, commands.BucketType.user)
     @option(name = 'member', description = 'Escolha um membro')
     async def userinfo(self, ctx, member: discord.Member = None):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
         
@@ -243,13 +216,10 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
         await ctx.respond(embed=embed)
 
-    @slash_command(name = 'avatar', description = 'Envia o avatar de um membro')
+    @slash_command(guild_only = True,name = 'avatar', description = 'Envia o avatar de um membro')
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Ecolha um membro')
     async def avatar(self, ctx, member: discord.Member = None):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -282,12 +252,9 @@ API: {round((end_time - start_time) * 1000)}ms''',
         
         await ctx.respond(embed = embed)
 
-    @slash_command(name = 'invite', description = 'Encia o link para me convidar para seu server')
+    @slash_command(guild_only = True,name = 'invite', description = 'Encia o link para me convidar para seu server')
+    @commands.cooldown(1,5, commands.BucketType.user)
     async def invite(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
         
@@ -299,27 +266,28 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
         await ctx.respond(embed=e)
 
-    @slash_command(name = 'vote', description = 'Envia o link para votar em mim no top.gg')
+    @slash_command(guild_only = True,name = 'vote', description = 'Envia o link para votar em mim no top.gg')
     @commands.cooldown(1,5,commands.BucketType.user)
     async def Vote(self, ctx):
 
         if ctx.guild == None:
-            
+
             return
 
         t = await translate(ctx.guild)
 
         e1 = self.bot.get_emoji(972895959191289886)
 
-        server = '[Server Suport](https://discord.com/invite/xSs6xEjuvf)'
+        server = '[Server Suport](https://discord.com/invite/USMVRUcDGa)'
 
         top = '[Top.gg](https://top.gg/bot/1012121641947517068)'
 
-        inv = '[Invite](https://discord.com/api/oauth2/authorize?client_id=930619804593819699&permissions=8&scope=bot%20applications.commands)'
+        inv = '[Invite](https://discord.com/api/oauth2/authorize?client_id=1012121641947517068&permissions=8&scope=bot%20applications.commands)'
 
         topgg = discord.Embed(title = 'Vote', 
 
         description = t['args']['topgg']['dsc'].format(ctx.author.mention))
+
         topgg.add_field(name = f':grey_question: {t["args"]["topgg"]["duvids"]}', value = server, inline = False)
         
         topgg.add_field(name = f'{e1} {t["args"]["topgg"]["cresc"]}', 
@@ -334,54 +302,36 @@ API: {round((end_time - start_time) * 1000)}ms''',
 
         await ctx.respond(embed = topgg)
 
-    @slash_command(name = 'bot_info', description = 'Envia algumas informações minha')
+    @slash_command(guild_only = True,name = 'bot_info', description = 'Envia algumas informações minha')
+    @commands.cooldown(1,5, commands.BucketType.user)
     async def botinfo(self, ctx):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
-        pyton = self.bot.get_emoji(971189876986884186)
-
+        python = self.bot.get_emoji(971189876986884186)
         disocrd = self.bot.get_emoji(971212878763917362)
-
-        bot = self.bot.get_emoji(971571054046773250)
-
         Vs = self.bot.get_emoji(971571518532354118)
-
         name = self.bot.get_emoji(971487187361218620)
 
         e = discord.Embed(title = t["args"]["botinfo"]["mif"])
-
         e.set_thumbnail(url = self.bot.user.avatar.url)
-
         e.add_field(name = f'{name} {t["args"]["botinfo"]["name"]}', value = self.bot.user.name, inline = True)
-
-        e.add_field(name = f'{Vs} {t["args"]["botinfo"]["language"]}', value = f'{pyton} Python', inline = True)
-
+        e.add_field(name = f'{Vs} {t["args"]["botinfo"]["language"]}', value = f'{python} Python', inline = True)
         e.add_field(name = '════════════', value = '════════════', inline = False)
-
         e.add_field(name = f'{disocrd} {t["args"]["botinfo"]["version"]}', value = discord.__version__, inline = True)
-
-        e.add_field(name = f'{pyton} {t["args"]["botinfo"]["pyversion"]}', value = platform.python_version(), inline = True)
-
+        e.add_field(name = f'{python} {t["args"]["botinfo"]["pyversion"]}', value = platform.python_version(), inline = True)
         e.add_field(name = '════════════', value = '════════════', inline = False)
-
         e.add_field(name = f':calendar_spiral: {t["args"]["botinfo"]["ii"]}', value = '2019', inline = True)
-
         e.add_field(name = f':calendar_spiral: {t["args"]["botinfo"]["rz"]}', value = '2022', inline = True)
+        e.add_field(name = '════════════', value = '════════════', inline = False)
+        e.add_field(name = 'Commands', value = self.bot.application_commands.count, inline = True)
 
         await ctx.respond(embed = e)
         
-    @slash_command(name = 'emoji_info', description = 'Envia algumas informações de um emoji')
+    @slash_command(guild_only = True,name = 'emoji_info', description = 'Envia algumas informações de um emoji')
+    @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'emoji', description = 'Escolha um emoji')
     async def EmojiInfo(self, ctx, emoji: discord.Emoji):
-
-        if ctx.guild == None:
-            
-            return
 
         t = await translate(ctx.guild)
 
@@ -404,24 +354,6 @@ API: {round((end_time - start_time) * 1000)}ms''',
         embed.add_field(name = f':mag_right: {t["args"]["emoji"]["server"]}', value = emoji.guild, inline = True)
 
         await ctx.respond(embed = embed)
-
-    @slash_command(name = 'emoji', description = 'Envia um emoji no chat')
-    @option(name = 'emoji', description = 'Escolha o emoji')
-    async def emoji(self, ctx, emoji: discord.Emoji):
-
-        e = Image.open('./images_fonts/imagens/emoji.png')
-
-        data = BytesIO(await emoji.read())
-
-        pfp = Image.open(data)
-
-        pfp = pfp.resize((40,40))
-
-        e.paste(pfp,(0,0))
-
-        e.save('./images_fonts/saves/emoji.png')
-
-        await ctx.respond(file = discord.File('./images_fonts/saves/emoji.png'))
-
+        
 def setup(bot:commands.Bot):
     bot.add_cog(gerais(bot))

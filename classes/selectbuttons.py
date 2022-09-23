@@ -315,15 +315,27 @@ class setlang(Select):
         placeholder= t['args']['lang']['lang'],
         options = [
             discord.SelectOption(
-                label = 'pt-br',
+                label = 'pt-BR',
                 description = t['args']['lang']['ptbr'],
+                value = 'pt-br'
             ),
             discord.SelectOption(
-                label = 'en-us',
-                description = t['args']['lang']['eng']
+                label = 'en-US',
+                description = t['args']['lang']['eng'],
+                value = 'en-us'
+            ),
+            discord.SelectOption(
+                label = 'fr-FR',
+                description = t['args']['lang']['fr'],
+                value = 'fr-fr'
+            ),
+            discord.SelectOption(
+                label = 'es-ES',
+                description = t['args']['lang']['es'],
+                value = 'es-es'
             )
         ])
-    async def callback(self, interaction : discord.Interaction):
+    async def callback(self, interaction: discord.Interaction):
 
         if self.values[0] == 'pt-br':
 
@@ -348,6 +360,30 @@ class setlang(Select):
             await lang('lang',self.values[0],interaction.guild)
 
             await interaction.response.send_message('ok now i will speak english', ephemeral = True)
+
+        if self.values[0] == 'fr-fr':
+
+            if self.values[0] == mod.find_one({'_id':interaction.guild.id})['lang']:
+
+                await interaction.response.send_message(self.t['args']['lang']['langequal'], ephemeral = True)
+
+                return
+
+            await lang('lang',self.values[0],interaction.guild)
+
+            await interaction.response.send_message('Bon, maintenant je vais parler français', ephemeral = True)
+
+        if self.values[0] == 'es-es':
+
+            if self.values[0] == mod.find_one({'_id':interaction.guild.id})['lang']:
+
+                await interaction.response.send_message(self.t['args']['lang']['langequal'], ephemeral = True)
+
+                return
+
+            await lang('lang',self.values[0],interaction.guild)
+
+            await interaction.response.send_message('Bien, ahora hablaré español.', ephemeral = True)
 
 class actvate(Select):
 

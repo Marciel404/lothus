@@ -63,6 +63,10 @@ class eventslogs(commands.Cog):
 
             if db['ltxt']['True?'] == True:
 
+                if antes.content == depois.content:
+
+                    return
+
                 t = translates(antes.guild)
 
                 channel = self.bot.get_channel(db['ltxt']['id'])
