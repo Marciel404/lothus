@@ -1,11 +1,16 @@
 import discord,os
+from discord import Bot as BotBase
 
-from discord.ext import commands
+__title__ = "LothusBot"
+__author__ = "Marciel404"
+__license__ = "MIT"
+__copyright__ = "Copyright 2022-present Marciel404"
+__version__ = "2.0.1"
 
 class loadcogs():
 
     def __init__(self, bot):
-
+        
         self.bot = bot
 
     def load(self):
@@ -17,35 +22,31 @@ class loadcogs():
                 self.bot.load_extension('plugins.{0}'.format(filename[:-3]))
 
         for filename in os.listdir('./commands'):
-
+            
             if filename.endswith(".py"):
 
                 self.bot.load_extension('commands.{0}'.format(filename[:-3]))
 
-class client(commands.Bot):
+class client(BotBase):
 
-    def __init__(self, token, prefix):
+    def __init__(self, token):
 
         self.token = token
-        
+
         super().__init__(
 
-            command_prefix = prefix,
+            help_command=None,
 
-            help_command = None,
-
-            intents = discord.Intents.all(),
-
-            case_insensitive = True
+            intents=discord.Intents.all(),
         )
-    
-    async def on_connect(self):
 
+    async def on_ready(self):
+        
         await self.change_presence(activity=discord.Game(name="/help"))
 
         print(f'Eu estou online como {self.user}')
 
-        print(discord.__version__)
+        print(__version__)
 
     def __run__(self):
 
