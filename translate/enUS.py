@@ -304,7 +304,7 @@ EditEmbed - (Manage channels) - Edit an embed already sent in the desired chat
             'description': 'General commands',
 
             'content':'''
-Hello - Lothus test command
+HelloWorld - Lothus test command
 Random - Choose a random number for you
 Ping - Shows my ping and discord api
 Servers - Tells how many servers I'm on
@@ -322,11 +322,10 @@ Warns - Sends a member's warnings
 
             'content':'''
 Roll - You can win from 0 to 2000 lothcoins
-LothCoins - Shows how many lothcoins you have or from the mentioned member
+Wallet - Shows how many lothcoins you have or from the mentioned member
 LothCoinsTop - Shows the rank of richest people
 SlotMachine - You can bet on luck and quadruple your lothcoins
 Transfer - You can transfer lothcoins to other people
-FlipCoinBet - Play heads or tails for your lothcoins
 '''
         },
         'suport': {
@@ -365,7 +364,7 @@ Head_Minecraft - Sends the head of a minecraft player
 
             'content':'''
 Hug - Hugs a member
-Bite - Bite a limb
+Bite - Bite a member
 Slap - Hits a member
 Kiss - Kiss a member
 Cafune - Cafune someone

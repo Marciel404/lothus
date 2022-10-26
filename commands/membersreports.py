@@ -11,10 +11,18 @@ class membersreport(commands.Cog):
         
         self.bot = bot
 
-    @slash_command(guild_only = True, name = 'warns', description = 'Mostra as advs de um membro')
+    @slash_command(
+        guild_only = True,
+        name = 'warns',
+        description = 'Mostra as advs de um membro',
+        )
     @commands.cooldown(1,5, commands.BucketType.user)
-    @option(name = 'member', description = 'Escolha o membro a remover a advertencia')
+    @option(name = 'membro', description = 'Escolha o membro a remover a advertencia')
     async def veradv(self, ctx, member: discord.Member):
+
+        if ctx.guild == None:
+            
+            return
 
         t = await translate(ctx.guild)
 

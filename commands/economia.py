@@ -12,7 +12,24 @@ class economia(commands.Cog):
 
         self.bot = bot
 
-    @discord.slash_command(name = 'roll', description = 'Você pode ganhar de 0 a 2000 LothCoins', guild_only = True)
+    @discord.slash_command(
+        name = 'roll', 
+        description = 'You can win from 0 to 2000 lothcoins',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'roll',
+            'en-GB': 'roll',
+            'es-ES': 'rodar',
+            'pt-BR': 'rolar',
+            'fr': 'rouler'
+        },
+        description_localizations = {
+            'en-US': 'You can win from 0 to 2000 lothcoins',
+            'en-GB': 'You can win from 0 to 2000 lothcoins',
+            'es-ES': 'Puedes ganar de 0 a 2000 lothcoins',
+            'pt-BR': 'Voce pode ganhar de 0 a 2000 lothcoins',
+            'fr': 'Vous pouvez gagner de 0 à 2000 lothcoins'
+        })
     @commands.cooldown(5, 7200, commands.BucketType.user)
     async def rolar(self, ctx):
 
@@ -42,7 +59,24 @@ class economia(commands.Cog):
 
             await ctx.respond(f'{ctx.author.name}, {t["args"]["gan"]} {r} LothCoins')
 
-    @slash_command(name = 'lothcoins', description = 'Mostra quantas LothCoins uma pessoa tem', guild_only = True)
+    @slash_command(
+        name = 'lothcoins',
+        description = 'Mostra quantas LothCoins uma pessoa tem',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'wallet',
+            'en-GB': 'wallet',
+            'es-ES': 'cartera',
+            'pt-BR': 'carteira',
+            'fr': 'portefeuille'
+        },
+        description_localizations = {
+            'en-US': 'Shows how many lothcoins you have or from the mentioned member',
+            'en-GB': 'Shows how many lothcoins you have or from the mentioned member',
+            'es-ES': 'Muestra cuántos lothcoins tienes o del miembro mencionado',
+            'pt-BR': 'Mostra quantos lothcoins você tem ou do membro mencionado',
+            'fr': 'Montre combien de lothcoins vous avez ou du membre mentionné'
+        })
     @option(name = 'member', description = 'Escolha um membro')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def LOTHCOINS(self, ctx, member: discord.Member = None):
@@ -71,7 +105,24 @@ class economia(commands.Cog):
 
         await ctx.respond(embed = em)
 
-    @slash_command(name = 'transfer', description = 'Transfere LothCoins para outro membro', guild_only = True)
+    @slash_command(
+        name = 'transfer',
+        description = 'Transfer LothCoins for outher member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'transfer',
+            'en-GB': 'transfer',
+            'es-ES': 'transferir',
+            'pt-BR': 'transferir',
+            'fr': 'trasférer'
+        },
+        description_localizations = {
+            'en-US': 'You can transfer lothcoins to other people',
+            'en-GB': 'You can transfer lothcoins to other people',
+            'es-ES': 'Puedes transferir lothcoins a otras personas',
+            'pt-BR': 'Trafere lothcoins para um membro',
+            'fr': "Vous pouvez transférer des lothcoins à d'autres personnes"
+        })
     @option(name = 'member', description = 'Ecolha o membro a transferir')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def Transferir(self, ctx, member: discord.Member, lothcoins: int):
@@ -126,7 +177,24 @@ class economia(commands.Cog):
 
         await ctx.respond(t['args']['economy']['vct'].format(lothcoins,member.mention))
 
-    @slash_command(name = 'slot_machine', description = 'Aposta no caça níquel', guild_only = True)
+    @slash_command(
+        name = 'slot_machine',
+        description = 'Slot machine bet',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'slot_machine',
+            'en-GB': 'slot_machine',
+            'es-ES': 'tragamonedas',
+            'pt-BR': 'caça-niquel',
+            'fr': 'machine_à_sous'
+        },
+        description_localizations = {
+            'en-US': 'Slot machine bet',
+            'en-GB': 'Slot machine bet',
+            'es-ES': 'Apuesta de tragamonedas',
+            'pt-BR': 'Aposta no caça-niquel',
+            'fr': "Pari de machine à sous"
+        })
     @option(name = 'lothcoins', description = 'Escolha a quantidade a jogar')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def loteria(self, ctx, lothcoins:int):
@@ -179,48 +247,17 @@ class economia(commands.Cog):
 
             await ctx.respond( t['args']['economy']['lost'] + f' {lothcoins} LothCoins', ephemeral = True)
 
-    @slash_command(name = 'flipcoinbet', description = 'Aposta no cara ou coroa', guild_only = True)
-    @option(name = 'lothcoins', description = 'Escolha a quantidade a apostar')
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    async def Caraoucoroaap(self, ctx, lothcoins: int, escolha):
-
-        t = await translate(ctx.guild)
-        
-        bal = bank.find_one({"_id": ctx.author.id})
-
-        if lothcoins > bal["LOTHCOINS"]:
-
-            await ctx.respond(t['args']['economy']['notmoney'], ephemeral = True)
-
-            return
-
-        elif lothcoins == 0:
-
-            await ctx.respond(t['args']['economy']['>0'], ephemeral = True)
-        
-            return
-
-        elif lothcoins < 0:
-
-            await ctx.respond(t['args']['economy']['<0'], ephemeral = True)
-
-            return
-
-        random1 = random.choice(['cara', 'coroa'])
-
-        if random1 == escolha.lower():
-
-            await ctx.respond(f'Caiu {escolha}\nParabens, você ganhou {lothcoins*2} LOTHCOINS')
-
-            await update_bank(ctx.author, + lothcoins*2)
-
-        elif random1 != escolha.lower():
-
-            await ctx.respond(f'Caiu {random1}\nSad, você perdeu {lothcoins} LOTHCOINS')
-
-            await update_bank(ctx.author, - lothcoins)
-
-    @slash_command(name = 'lothcoins_top', description = 'Mostra os mais ricos', guild_only = True)
+    @slash_command(
+        name = 'lothcoins_top', 
+        description = 'Shows the rank of richest people', 
+        guild_only = True,
+        description_localizations = {
+            'en-US': 'Shows the rank of richest people',
+            'en-GB': 'Shows the rank of richest people',
+            'es-ES': 'Muestra el rango de las personas más ricas',
+            'pt-BR': 'Mostra o rank de pessoas mais ricas',
+            'fr': "Affiche le rang des personnes les plus riches"
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     async def LOTHCOINSTOP(self, ctx):
 

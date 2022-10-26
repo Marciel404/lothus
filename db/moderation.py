@@ -49,3 +49,13 @@ async def adcadvdb(guild, author, member, qnt, motivo):
 async def rmvadvdb(guild,author,member, qnt, motivo):
 
     advdb.update_one( { "_id":f'{guild.id}_{member.id}'}, {'$unset':{qnt:[author,member.id,motivo]}})
+
+async def msgtckid(id, guild):
+
+    if id is not None:
+
+        if mod.count_documents({"_id":guild.id}) == 0:
+
+            mod.insert_one({"_id":guild.id, "Nome":guild.name})
+
+        mod.update_one({"_id": guild.id}, {"$set": {"msgtck": id}}, upsert = True)

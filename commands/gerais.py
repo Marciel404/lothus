@@ -2,6 +2,7 @@ import discord, time, random,platform
 
 from discord.ext import commands
 from discord import slash_command, option
+from classes.buttons import profile
 from utils.defs import *
 from classes.selectbuttons import *
 from db.economy import *
@@ -13,7 +14,24 @@ class gerais(commands.Cog):
 
         self.bot = bot
 
-    @slash_command(guild_only = True, name = 'hello_world', description = 'Comandos de teste do Lothus')
+    @slash_command(
+        guild_only = True,
+        name = 'hello_world',
+        description = 'Lothus test command',
+        name_localizations = {
+            'en-US': 'hello_world',
+            'en-GB': 'hello_world',
+            'es-ES': 'hola_mundo',
+            'pt-BR': 'ola_mundo',
+            'fr': 'bonjour_le_monde'
+        },
+        description_localizations = {
+            'en-US': 'Lothus test command',
+            'en-GB': 'Lothus test command',
+            'es-ES': 'Comando de prueba de Lothus',
+            'pt-BR': 'Comando de teste do Lothus',
+            'fr': 'Commande de test Lothus'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     async def hello(self, ctx):
 
@@ -21,7 +39,24 @@ class gerais(commands.Cog):
 
         await ctx.respond(t["args"]["hello"])
 
-    @slash_command(guild_only = True,name = 'help', description = 'Envia minha lista de comandos')
+    @slash_command(
+        guild_only = True,
+        name = 'help',
+        description = 'Help command lothus',
+        name_localizations = {
+            'en-US': 'help',
+            'en-GB': 'help',
+            'es-ES': 'ayuda',
+            'pt-BR': 'ajuda',
+            'fr': 'aider'
+        },
+        description_localizations = {
+            'en-US': 'Help command Lothus',
+            'en-GB': 'Help command Lothus',
+            'es-ES': 'Comando de ayuda de Lotus',
+            'pt-BR': 'Comando de ajuda do Lothus',
+            'fr': 'Commande de aider Lothus'
+        })
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def help(self, ctx):
 
@@ -34,7 +69,24 @@ class gerais(commands.Cog):
 
         await ctx.respond(embed = h, view = discord.ui.View(selecthelp(self.bot,ctx.author,t)))
 
-    @slash_command(guild_only = True,name = 'random', description = 'Escolhe um numero aleatorio')
+    @slash_command(
+        guild_only = True,
+        name = 'random',
+        description = 'Choose a random number for you',
+        name_localizations = {
+            'en-US': 'random',
+            'en-GB': 'random',
+            'es-ES': 'aleatorio',
+            'pt-BR': 'aleatorio',
+            'fr': 'aléatoire'
+        },
+        description_localizations = {
+            'en-US': 'Choose a random number for you',
+            'en-GB': 'Choose a random number for you',
+            'es-ES': 'Elija un número aleatorio para usted',
+            'pt-BR': 'Escolhe um numero aleatorio para você',
+            'fr': 'Choisissez un nombre aléatoire pour vous'
+        })
     @option(name = 'number', description = 'Coloque um numero')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def aleatorio(self, ctx,numero: int):
@@ -45,7 +97,17 @@ class gerais(commands.Cog):
 
         await ctx.respond(f'{t["args"]["random"]} {dado}')
 
-    @slash_command(guild_only = True,name = 'ping', description = 'Envia meu ping')
+    @slash_command(
+        guild_only = True,
+        name = 'ping',
+        description = 'Shows my ping and discord api',
+        description_localizations = {
+            'en-US': 'Shows my ping and discord api',
+            'en-GB': 'Shows my ping and discord api',
+            'es-ES': 'Mostrar mi api de ping y discord',
+            'pt-BR': 'Mostra o meu ping e da api do discord',
+            'fr': 'Afficher mon ping et discord api'
+        })
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def ping(self, ctx):
         
@@ -68,7 +130,17 @@ API: {round((end_time - start_time) * 1000)}ms
 
         await ctx.respond(embed = p4)
 
-    @slash_command(guild_only = True,name = 'servers', description = "Envia em quantos servers eu esrou")
+    @slash_command(
+        guild_only = True,
+        name = 'servers',
+        description = "Tells how many servers I'm on",
+        description_localizations = {
+            'en-US': "Tells how many servers I'm on",
+            'en-GB': "Tells how many servers I'm on",
+            'es-ES': 'Dime en cuántos servidores estoy',
+            'pt-BR': 'Diz em quantos servers eu estou',
+            'fr': 'Dites-moi sur combien de serveurs je suis'
+        })
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def servers(self, ctx):
 
@@ -76,7 +148,17 @@ API: {round((end_time - start_time) * 1000)}ms
 
         await ctx.respond(t["args"]["servers"]["s"].format(str(len(self.bot.guilds))))
 
-    @slash_command(guild_only = True,name = 'server_info', description = 'Envia algumas informações do server')
+    @slash_command(
+        guild_only = True,
+        name = 'server_info',
+        description = 'Pulls information from the server',
+        description_localizations = {
+            'en-US': "Pulls information from the server",
+            'en-GB': "Pulls information from the server",
+            'es-ES': 'Extraer la información del servidor',
+            'pt-BR': 'Puxa as informações do server',
+            'fr': 'Obtenir les informations du serveur'
+        })
     @commands.cooldown(1, 5, commands.BucketType.user)
     @option(name = 'server', description = 'Envie o id do server')
     async def serverInfo(self, ctx, server: discord.Guild = None):
@@ -151,7 +233,17 @@ API: {round((end_time - start_time) * 1000)}ms
 
         await ctx.respond(embed = embed)
 
-    @slash_command(guild_only = True,name = 'user_info', description = 'Envia algumas informações de um membro')
+    @slash_command(
+        guild_only = True,
+        name = 'user_info', 
+        description = "pulls a member's information or their",
+        description_localizations = {
+            'en-US': "Pulls a member's information or their",
+            'en-GB': "Pulls a member's information or their",
+            'es-ES': 'Extrae la información de un miembro o su',
+            'pt-BR': 'Puxa as informações de algum membro ou as suas',
+            'fr': "Obtenir les informations d'un membre ou leur"
+        })
     @commands.cooldown(1, 5, commands.BucketType.user)
     @option(name = 'member', description = 'Escolha um membro')
     async def userinfo(self, ctx, member: discord.Member = None):
@@ -354,6 +446,65 @@ API: {round((end_time - start_time) * 1000)}ms
         embed.add_field(name = f':mag_right: {t["args"]["emoji"]["server"]}', value = emoji.guild, inline = True)
 
         await ctx.respond(embed = embed)
+
+    @slash_command(guild_only = True,name = 'profile', description = 'Envia seu perfil')
+    @option(name = 'member', description = 'Envia o perfil de um membro')
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def profile(self, ctx, member: discord.Member = None):
+
+        if member == None:
+
+            member = ctx.author
+
+        if perf.count_documents({'_id': member.id}) == 0:
+
+            await upPerfil(member,'r0','Idade',None)
+            await upPerfil(member,'r1','Genero',None)
+            await upPerfil(member,'r2',"País",None)
+            await upPerfil(member,'r3','Cidade',None)
+            await upPerfil(member,'r4', 'Descrição do perfil',"Lothus é um otimo Bot")
+            await upPerfil(member,'r5', 'Casado com',None)
         
+        i2 = 0
+
+        embed = discord.Embed(title = 'Perfil')
+
+        embed.set_thumbnail(url = member.display_avatar)
+
+        while True:
+
+            per = perf.find_one({'_id': member.id})
+
+            if per[f'r{i2}']['value'] != None:
+
+                embed.add_field(name = per[f'r{i2}']['name'], value = per[f'r{i2}']['value'])
+
+            if per[f'r0']['value'] == None\
+            and per[f'r1']['value'] == None\
+            and per[f'r2']['value'] == None\
+            and per[f'r3']['value'] == None\
+            and per[f'r4']['value'] == None\
+            and per[f'r5']['value'] == None:
+
+                embed.add_field(name = 'error', value = 'Você não possue registro')
+
+                break
+
+            if i2 == 5:
+
+                break
+
+            else:
+
+                i2 += 1
+        
+        if member.id == ctx.author.id:
+    
+            await ctx.respond(embed = embed, view = profile(ctx.author))
+
+        else:
+
+            await ctx.respond(embed = embed)
+
 def setup(bot:commands.Bot):
     bot.add_cog(gerais(bot))

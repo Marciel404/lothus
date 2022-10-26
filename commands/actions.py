@@ -11,7 +11,24 @@ class actions(commands.Cog):
 
         self.bot = bot
 
-    @slash_command(name = 'flip_coin', description = 'Joga uma moeda de cara ou coroa', guild_only = True)
+    @slash_command(
+        name = 'flip_coin', 
+        description = 'Flip a coin', 
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'flip_coin',
+            'en-GB': 'flip_coin',
+            'es-ES': 'tirar_la_moneda',
+            'pt-BR': 'girar_moeda',
+            'fr': 'pièce_de_monnaie'
+        },
+        description_localizations = {
+            'en-US': 'Play heads or tails',
+            'en-GB': 'Play heads or tails',
+            'es-ES': 'Juega cara o cruz',
+            'pt-BR': 'Joga cara ou coroa',
+            'fr': 'Jouer à pile ou face'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     async def flipcoin(self, ctx):
 
@@ -27,7 +44,24 @@ class actions(commands.Cog):
 
             await ctx.respond(t['args']['actions']['flip2'])
 
-    @slash_command(name = 'hug', description = 'hug one member', guild_only = True)
+    @slash_command(
+        name = 'hug',
+        description = 'hug one member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'hug',
+            'en-GB': 'hug',
+            'es-ES': 'abrazo',
+            'pt-BR': 'abraço',
+            'fr': 'câliner'
+        },
+        description_localizations = {
+            'en-US': 'Hug a member',
+            'en-GB': 'Hug a member',
+            'es-ES': 'Abrazar a un miembro',
+            'pt-BR': 'Abraça um membro',
+            'fr': 'Embrasser un membre'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def hug(self, ctx, member: discord.Member):
@@ -50,7 +84,24 @@ class actions(commands.Cog):
 
         await ctx.respond(content = f'{member.mention}',embed = kiss, view = huges(member,ctx.author))
 
-    @slash_command(name = 'kiss', description = 'kiss one member', guild_only = True)
+    @slash_command(
+        name = 'kiss',
+        description = 'kiss one member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'kiss',
+            'en-GB': 'kiss',
+            'es-ES': 'beso',
+            'pt-BR': 'beijar',
+            'fr': 'embrasser'
+        },
+        description_localizations = {
+            'en-US': 'Kiss a member',
+            'en-GB': 'Kiss a member',
+            'es-ES': 'Beso a un miembro',
+            'pt-BR': 'Beija um membro',
+            'fr': 'Embrasser un membre'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def kiss(self, ctx, member: discord.Member):
@@ -79,7 +130,24 @@ class actions(commands.Cog):
 
             await ctx.respond(content = f'{member.mention}',embed = kiss, view = kisses(member,ctx.author))
 
-    @slash_command(name = 'slap', description = 'Slap one member', guild_only = True)
+    @slash_command(
+        name = 'slap',
+        description = 'Slap one member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'slap',
+            'en-GB': 'slap',
+            'es-ES': 'bofetada',
+            'pt-BR': 'tapa',
+            'fr': 'gifler'
+        },
+        description_localizations = {
+            'en-US': 'slap a member',
+            'en-GB': 'slap a member',
+            'es-ES': 'bofetada a un miembro',
+            'pt-BR': 'Estapeia um membro',
+            'fr': 'Gifler un membre'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def slap(self, ctx, member: discord.Member):
@@ -114,7 +182,24 @@ class actions(commands.Cog):
 
             await ctx.respond(content = f'{member.mention}',embed = kiss, view = slaps(member,ctx.author))
 
-    @slash_command(name = 'punch', description = 'Punch one member', guild_only = True)
+    @slash_command(
+        name = 'punch',
+        description = 'Punch one member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'punch',
+            'en-GB': 'punch',
+            'es-ES': 'golpear',
+            'pt-BR': 'soco',
+            'fr': 'gifler'
+        },
+        description_localizations = {
+            'en-US': 'Punch a member',
+            'en-GB': 'Punch a member',
+            'es-ES': 'Golpea a un miembro',
+            'pt-BR': 'Soca um membro',
+            'fr': 'Gifler un membre'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def punch(self, ctx, member: discord.Member):
@@ -149,7 +234,24 @@ class actions(commands.Cog):
 
             await ctx.respond(content = f'{member.mention}',embed = kiss, view = punches(member,ctx.author))
 
-    @slash_command(name = 'bite', description = 'Bite one member', guild_only = True)
+    @slash_command(
+        name = 'bite',
+        description = 'Bite one member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'bite',
+            'en-GB': 'bite',
+            'es-ES': 'morder',
+            'pt-BR': 'morder',
+            'fr': 'mordre'
+        },
+        description_localizations = {
+            'en-US': 'Bite a member',
+            'en-GB': 'Bite a member',
+            'es-ES': 'Morder a un miembro',
+            'pt-BR': 'Morde um membro',
+            'fr': 'Mordre un membre'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Select one member')
     async def bite(self, ctx, member: discord.Member):
@@ -172,7 +274,24 @@ class actions(commands.Cog):
 
         await ctx.respond(content = f'{member.mention}',embed = kiss, view = bites(member,ctx.author))
 
-    @slash_command(name = 'lick', description = 'Lick a member', guild_only = True)
+    @slash_command(
+        name = 'lick',
+        description = 'Lick a member',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'lick',
+            'en-GB': 'lick',
+            'es-ES': 'lamer',
+            'pt-BR': 'lamber',
+            'fr': 'lécher'
+        },
+        description_localizations = {
+            'en-US': 'Lick a member',
+            'en-GB': 'Lick a member',
+            'es-ES': 'Lamer a un miembro',
+            'pt-BR': 'Lambe um membro',
+            'fr': 'Lécher un membre'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Mention member')
     async def lick(self, ctx, member: discord.Member):
@@ -195,7 +314,7 @@ class actions(commands.Cog):
 
         await ctx.respond(content = f'{member.mention}',embed = kiss, view = lickes(member,ctx.author))
 
-    @slash_command(name = 'cafune', description = 'Faz um cafune em alguem', guild_only = True)
+    @slash_command(name = 'cafune',description = 'Faz um cafune em alguem',guild_only = True)
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'member', description = 'Mencione um member')
     async def pat(self, ctx, member: discord.Member):

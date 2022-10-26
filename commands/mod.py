@@ -1,10 +1,11 @@
-import discord, requests
+import discord, requests, hexacolors
 
 from discord.ext import commands
 from discord import slash_command, option
 from db.moderation import *
 from utils.defs import *
 from classes.selectbuttons import *
+from classes.buttons import ticket
 
 class moderation(commands.Cog):
 
@@ -12,7 +13,24 @@ class moderation(commands.Cog):
 
         self.bot = bot
 
-    @slash_command(guild_only = True, name = 'setlang', description = 'Define o idioma do bot')
+    @slash_command(
+        guild_only = True,
+        name = 'setlang',
+        description = 'Sets Lotus language',
+        name_localizations = {
+            'en-US': 'setlang',
+            'en-GB': 'setlang',
+            'es-ES': 'elegir_lenguaje',
+            'pt-BR': 'definir_idioma',
+            'fr': 'définir_la_langue'
+        },
+        description_localizations = {
+            'en-US': 'Sets Lotus language',
+            'en-GB': 'Sets Lotus language',
+            'es-ES': 'Establece el idioma de Lotus',
+            'pt-BR': 'Define o idioma do Lothus',
+            'fr': 'Définit la langue Lotus'
+        })
     @commands.has_guild_permissions(manage_guild = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def setlang(self, ctx):
@@ -21,7 +39,17 @@ class moderation(commands.Cog):
 
         await ctx.respond(t['args']['lang']['select'], view = discord.ui.View(setlang(self.bot, ctx.author,t)), ephemeral = True)
 
-    @slash_command(guild_only = True, name = 'setlogs', description = 'Define um canal de logs')
+    @slash_command(
+        guild_only = True,
+        name = 'setlogs',
+        description = 'Sets lothus logs',
+        description_localizations = {
+            'en-US': 'Sets lothus logs',
+            'en-GB': 'Sets lothus logs',
+            'es-ES': 'Establece registros de lothus',
+            'pt-BR': 'Define as logs do lothus',
+            'fr': 'Définit les journaux de lotus'
+        })
     @commands.has_guild_permissions(manage_guild = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def setlogs(self, ctx):
@@ -30,7 +58,17 @@ class moderation(commands.Cog):
 
         await ctx.respond('',view = discord.ui.View(setlog(self.bot,ctx.author,t)), ephemeral = True)
 
-    @slash_command(guild_only = True, name = 'autorole', description = 'Define um cargo para o auto role')
+    @slash_command(
+        guild_only = True,
+        name = 'autorole',
+        description = 'Define um cargo para o auto role',
+        description_localizations = {
+            'en-US': 'Defines the role of autorole',
+            'en-GB': 'Defines the role of autorole',
+            'es-ES': 'Define el papel de autorole',
+            'pt-BR': 'Define o cargo do autorole',
+            'fr': 'Définit le rôle de l\'autorole'
+        })
     @option(name = 'role', description = 'Escolha o cargo')
     @commands.has_guild_permissions(manage_guild = True)
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -50,7 +88,24 @@ class moderation(commands.Cog):
 
         await ctx.respond(f"{t['args']['mod']['setautorole']} {role.mention}")
 
-    @slash_command(guild_only = True, name = 'kick', description = 'Expulsa uma pessoa do server')
+    @slash_command(
+        guild_only = True,
+        name = 'kick',
+        description = 'Kick a person from the server',
+        name_localizations = {
+            'en-US': 'kick',
+            'en-GB': 'kick',
+            'es-ES': 'expulsar',
+            'pt-BR': 'expulsar',
+            'fr': 'expulser'
+        },
+        description_localizations = {
+            'en-US': 'Kick a person from the server',
+            'en-GB': 'Kick a person from the server',
+            'es-ES': 'Expulsar a una persona del servidor.',
+            'pt-BR': 'Expulsa uma pessoa do server',
+            'fr': 'Expulser une personne du serveur'
+        })
     @option(name = 'member', description = 'Escolha o membro a expulsar')
     @option(name = 'reason', description = 'Motivo para banir')
     @commands.has_guild_permissions(kick_members = True)
@@ -66,7 +121,24 @@ class moderation(commands.Cog):
 
         await ctx.respond(t["args"]["mod"]["confirmkick"].format(member.mention),view = buttonkick(self.bot,member,reason, ctx.author))
 
-    @slash_command(guild_only = True, name = 'ban', description = 'Bane um membro do server')
+    @slash_command(
+        guild_only = True,
+        name = 'ban',
+        description = 'Bane um membro do server',
+        name_localizations = {
+            'en-US': 'ban',
+            'en-GB': 'ban',
+            'es-ES': 'prohibir',
+            'pt-BR': 'banir',
+            'fr': 'bannir'
+        },
+        description_localizations = {
+            'en-US': 'Ban a server member',
+            'en-GB': 'Ban a server member',
+            'es-ES': 'Prohibir a un miembro del servidor.',
+            'pt-BR': 'Bane um membro do servidor',
+            'fr': 'Bannir un membre du serveur'
+        })
     @option(name = 'member', description = 'Escolha um membro a banir')
     @option(name = 'reason', description = 'Motivo de banir')
     @commands.has_guild_permissions(ban_members = True)
@@ -82,7 +154,24 @@ class moderation(commands.Cog):
 
         await ctx.respond(t["args"]["mod"]["confirmban"].format(member.mention),view = buttonban(self.bot,member,reason,ctx.author))
 
-    @slash_command(guild_only = True, name = 'clear', description = 'Limpa o chat')
+    @slash_command(
+        guild_only = True,
+        name = 'clear',
+        description = 'clear the chat',
+        name_localizations = {
+            'en-US': 'clear',
+            'en-GB': 'clear',
+            'es-ES': 'limpio',
+            'pt-BR': 'limpar',
+            'fr': 'clair'
+        },
+        description_localizations = {
+            'en-US': 'Clear the chat',
+            'en-GB': 'Clear the chat',
+            'es-ES': 'Borrar el chat.',
+            'pt-BR': 'Limpa o chat',
+            'fr': 'canal le clair'
+        })
     @option(name = 'qnt', description = 'Escolha uma quantidade de mensagem a limpar')
     @commands.has_guild_permissions(manage_channels = True)
     @commands.bot_has_guild_permissions(manage_channels = True)
@@ -109,7 +198,24 @@ class moderation(commands.Cog):
 
             await ctx.respond(t["args"]["mod"]["clearchat"].format(len(purge), ctx.author.mention))
 
-    @slash_command(guild_only = True, name = 'unban', description = 'Desbane um membro')
+    @slash_command(
+        guild_only = True,
+        name = 'unban',
+        description = 'Desbane um membro',
+        name_localizations = {
+            'en-US': 'unban',
+            'en-GB': 'unban',
+            'es-ES': 'desbanear',
+            'pt-BR': 'desbanir',
+            'fr': 'débannir'
+        },
+        description_localizations = {
+            'en-US': 'Unban a server member',
+            'en-GB': 'Unban a server member',
+            'es-ES': 'Desbanear a un miembro del servidor.',
+            'pt-BR': 'Desbane um membro do servidor',
+            'fr': 'Débannir un membre du serveur'
+        })
     @option(name = 'id', description = 'Id do membro')
     @option(name = 'reason', description = 'Motivo de desbanir')
     @commands.has_guild_permissions(ban_members = True)
@@ -147,7 +253,24 @@ class moderation(commands.Cog):
 
             await ctx.respond(embed = e)
 
-    @slash_command(guild_only = True, name = 'add_warning', description = 'Da uma advertencia para um membro')
+    @slash_command(
+        guild_only = True,
+        name = 'add_warning',
+        description = 'add a warning',
+        name_localizations = {
+            'en-US': 'add_warning',
+            'en-GB': 'add_warning',
+            'es-ES': 'añadir_advertencia',
+            'pt-BR': 'adc_advertencia',
+            'fr': 'ajouter_avertissement'
+        },
+        description_localizations = {
+            'en-US': 'Add a warning',
+            'en-GB': 'Add a warning',
+            'es-ES': 'Añadir una advertencia.',
+            'pt-BR': 'Adiciona uma adivetencia',
+            'fr': 'Ajouter une aventure'
+        })
     @option(name = 'member', description = 'Mencione o membro')
     @option(name = 'reason', description = 'Motivo da advertencia')
     @commands.cooldown(1,5, commands.BucketType.user)
@@ -200,7 +323,24 @@ class moderation(commands.Cog):
 
             await adcadvdb(ctx.guild,ctx.author,member,f"{t['args']['adv']}{advdb.find_one({ '_id':f'{ctx.guild.id}_{member.id}'})['qnt']}",reason)
 
-    @slash_command(guild_only = True, name = 'remove_warning', description = 'Remove uma advertencia de um membro')
+    @slash_command(
+        guild_only = True,
+        name = 'remove_warning',
+        description = 'Remove a member\'s warning',
+        name_localizations = {
+            'en-US': 'remove_warning',
+            'en-GB': 'remove_warning',
+            'es-ES': 'eliminar_advertencia',
+            'pt-BR': 'rmv_advertencia',
+            'fr': 'supprimer_avertissement'
+        },
+        description_localizations = {
+            'en-US': 'Remove a member\'s warning',
+            'en-GB': 'Remove a member\'s warning',
+            'es-ES': 'Eliminar la advertencia de un miembro.',
+            'pt-BR': 'Remove uma advertencia de um membro',
+            'fr': 'Supprimer l\'avertissement d\'un membre'
+        })
     @option(name = 'member', description = 'Mencione o membro')
     @commands.cooldown(1,5, commands.BucketType.user)
     @commands.has_guild_permissions(kick_members = True)
@@ -329,9 +469,10 @@ class moderation(commands.Cog):
     @option(name = 'link_image', description = 'Escolha a imagem da embed')
     @option(name = 'mention', description = 'Mencione um cargo para mencionar na embed')
     @option(name = 'content', description = 'Escreva o conteudo da embed')
+    @option(name = 'color', description = 'Escolha a cor da embed')
     @commands.cooldown(1,5, commands.BucketType.user)
     @commands.has_guild_permissions(manage_channels = True)
-    async def embed(self, ctx, channel: discord.TextChannel = None, title = None, img = None, mention: discord.Role = None, content = None):
+    async def embed(self, ctx, channel: discord.TextChannel = None, title = None, img = None, mention: discord.Role = None, color = None, content = None):
 
         if channel == None:
 
@@ -349,6 +490,26 @@ class moderation(commands.Cog):
 
             content = ''
 
+        if color == None:
+
+            color = hexacolors.string('indigo')
+
+        else:
+
+            try:
+
+                color =  hexacolors.string(color)
+
+            except:
+
+                try:
+
+                    color =  hexacolors.hexadecimal(color)
+                
+                except:
+
+                    color =  hexacolors.string('indigo')
+
         if mention == None:
 
             mention == ''
@@ -357,7 +518,7 @@ class moderation(commands.Cog):
 
             mention = mention.mention
 
-        e = discord.Embed(title = title, description = content, colour = 0x4B0082)
+        e = discord.Embed(title = title, description = content, colour = color)
 
         e.set_image(url = img)
 
@@ -374,9 +535,10 @@ class moderation(commands.Cog):
     @option(name = 'img', description = 'Escolha a imagem da embed')
     @option(name = 'mention', description = 'Mencione um cargo para mencionar na embed')
     @option(name = 'content', description = 'Escreva o conteudo da embed')
+    @option(name = 'color', description = 'Escolha a cor da embed')
     @commands.cooldown(1,5, commands.BucketType.user)
     @commands.has_guild_permissions(manage_channels = True)
-    async def editembed(self, ctx, embedid, title = None, img = None, mention: discord.Role = None, content = None, channel: discord.TextChannel = None):
+    async def editembed(self, ctx, embedid, title = None, img = None, mention: discord.Role = None, content = None,color = None, channel: discord.TextChannel = None):
 
         if channel == None:
 
@@ -389,6 +551,26 @@ class moderation(commands.Cog):
         if img == None:
 
             img = ''
+        
+        if color == None:
+
+            color = hexacolors.string('indigo')
+
+        else:
+
+            try:
+
+                color =  hexacolors.string(color)
+
+            except:
+
+                try:
+
+                    color =  hexacolors.hexadecimal(color)
+                
+                except:
+
+                    color =  hexacolors.string('indigo')
 
         if content == None:
 
@@ -404,7 +586,7 @@ class moderation(commands.Cog):
 
         mensagem = await channel.fetch_message(int(embedid))
 
-        e = discord.Embed(title = title, description = content, colour = 0x4B0082)
+        e = discord.Embed(title = title, description = content, colour = color)
 
         e.set_image(url = img)
 

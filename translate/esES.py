@@ -306,10 +306,10 @@ EditEmbed - (Gerenciar canais) - Edite un incrustado ya enviado en el chat desea
             'description': 'Comandos generales',
 
             'content':'''
-Hello - Comando de prueba de loto
-Random - Elija un número aleatorio para usted
+HolaMundo - Comando de prueba de Lothus
+Aleatorio - Elija un número aleatorio para usted
 Ping - Mostrar mi api de ping y discord
-Servers - Mostrar mi api de ping y discord
+Servers - Dime en cuántos servidores estoy
 Userinfo - Extrae la información de un miembro o su
 ServerInfo - Extraer la información del servidor
 Invite - Envía el enlace para invitar al bot
@@ -324,12 +324,11 @@ Profile - Enviar el perfil de un miembro
             'description':'Comandos de economia',
 
             'content':'''
-Roll - Puedes ganar de 0 a 2000 lothcoins
-LothCoins - Muestra cuántos lothcoins tienes o del miembro mencionado
+Rodar - Puedes ganar de 0 a 2000 lothcoins
+Cartera - Muestra cuántos lothcoins tienes o del miembro mencionado
 LothCoinsTop - Muestra el rango de las personas más ricas.
-SlotMachine - Puedes apostar a la suerte y cuadriplicar tus lothcoins
-Transfer - Puedes transferir lothcoins a otras personas
-FlipCoinBet - Puedes transferir lothcoins a otras personas
+tragamonedas - Puedes apostar a la suerte y cuadriplicar tus lothcoins
+transferir - Puedes transferir lothcoins a otras personas
 '''
         },
         'suport': {
@@ -339,8 +338,8 @@ FlipCoinBet - Puedes transferir lothcoins a otras personas
             'description': 'Comandos de apoyo',
 
             'content': '''
-Sugest - Envia uma sugestão para meu dono
-Report - Envia um report para meu dono
+Sugerencia - Enviar una sugerencia a mi dueño
+Reportar - Enviar un informe a mi propietario
 '''
         },
         'image':{
@@ -367,14 +366,14 @@ Head_Minecraft - Envía la cabeza de un jugador de minecraft
             'description': 'Comandos de ação',
 
             'content':'''
-Hug - Abrazar a un miembro
-Bite - Morder una extremidad
-Slap - Abofetear a algún miembro
-Kiss - Besar a un miembro
+Abrazo - Abrazar a un miembro
+Morder - Morder una extremidad
+Bofetada - Abofetear a algún miembro
+Beso - Besar a un miembro
 Cafune - Darle un cafune a alguien
 Punch - Golpear a algún miembro
-Lick - lamer a un miembro
-FlipCoin - Lanza una moneda
+Lamer - lamer a un miembro
+Tirar_la_moneda - Lanza una moneda
 '''
         }
 

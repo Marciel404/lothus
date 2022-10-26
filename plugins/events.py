@@ -2,7 +2,7 @@ import discord
 
 from discord.ext import commands
 from db.moderation import *
-from utils.defs import *
+from utils.defs import translates
 
 class events(commands.Cog):
 

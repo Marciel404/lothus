@@ -306,8 +306,8 @@ EditEmbed - (Gerenciar canais) - Modifier une intégration déjà envoyée dans 
             'description': 'Commandes générales',
 
             'content':'''
-Hello - Commande de test Lotus
-Random - Choisissez un nombre aléatoire pour vous
+BonjourLeMonde - Commande de test Lotus
+Aléatoire - Choisissez un nombre aléatoire pour vous
 Ping - Afficher mon ping et discord api
 Servers - Dites-moi sur combien de serveurs je suis
 Userinfo - Obtenir les informations d'un membre ou leur
@@ -324,12 +324,11 @@ Profile - Soumettre le profil d'un membre
             'description':"Commandes d'économie",
 
             'content':'''
-Roll - Vous pouvez gagner de 0 à 2000 lothcoins
-LothCoins - Montre combien de lothcoins vous avez ou du membre mentionné
+Rouler - Vous pouvez gagner de 0 à 2000 lothcoins
+Portefeuille - Montre combien de lothcoins vous avez ou du membre mentionné
 LothCoinsTop - Affiche le rang des personnes les plus riches
 SlotMachine - Vous pouvez parier sur la chance et quadrupler vos lothcoins
 Transfer - Vous pouvez transférer des lothcoins à d'autres personnes
-FlipCoinBet - Jouez à pile ou face pour vos lothcoins
 '''
         },
         'suport': {
@@ -339,8 +338,8 @@ FlipCoinBet - Jouez à pile ou face pour vos lothcoins
             'description': "Commandes d'soutien",
 
             'content': '''
-Sugest - Envoyer une suggestion à mon propriétaire
-Report - Envoyer un rapport à mon propriétaire
+Suggestion - Envoyer une suggestion à mon propriétaire
+Signaler - Envoyer un rapport à mon propriétaire
 '''
         },
         'image':{
@@ -367,14 +366,14 @@ Head_Minecraft - Envoyer la tête d'un joueur minecraft
             'description': "Commandes d'actions",
 
             'content':'''
-Hug - Embrasser un membre
-Bite - Mordre un membre
-Slap - Frapper un membre
-Kiss - Embrasser un membre
+Câliner - Embrasser un membre
+Mordre - Mordre un membre
+Gifler - Frapper un membre
+Embrasser - Embrasser un membre
 Cafune - Faire un bisou à quelqu'un
-Punch - Frapper un membre
-Lick - lécher un membre
-FlipCoin - lancer une pièce
+Gifler - Frapper un membre
+Lécher - lécher un membre
+pièce_de_monnaie - lancer une pièce
 '''
         }
 

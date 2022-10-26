@@ -88,7 +88,7 @@ class dono(commands.Cog):
 
     @slash_command(name = 'stop', guild_ids = [929181582571503658])
     @commands.cooldown(1, 2, commands.BucketType.member)
-    async def init(self, ctx, bot):
+    async def stop(self, ctx, bot):
 
         if bot == 'lthc':
 

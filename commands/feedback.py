@@ -8,7 +8,24 @@ class feedback(commands.Cog):
     def __init__(self, bot:commands.Bot):
         self.bot = bot
 
-    @slash_command(name = 'sugest', description = 'Envia uma sugestão para meu dono', guild_only = True)
+    @slash_command(
+        name = 'sugest',
+        description = 'Send a suggestion to my owner',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'sugest',
+            'en-GB': 'sugest',
+            'es-ES': 'sugerencia',
+            'pt-BR': 'sugestão',
+            'fr': 'suggestion'
+        },
+        description_localizations = {
+            'en-US': 'Send a suggestion to my owner',
+            'en-GB': 'Send a suggestion to my owner',
+            'es-ES': 'Enviar una sugerencia a mi dueño',
+            'pt-BR': 'Envia uma sugestão para meu dono',
+            'fr': 'Envoyer une suggestion à mon propriétaire'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'sugest', description = 'Escreva a sugestão')
     @commands.cooldown(1,5, commands.BucketType.user)
@@ -31,7 +48,24 @@ class feedback(commands.Cog):
 
         await user.send(embed=embed)
 
-    @slash_command(name = 'report_bug', description = 'Envia um report para meu dono', guild_only = True)
+    @slash_command(
+        name = 'report',
+        description = 'Send a report to my owner',
+        guild_only = True,
+        name_localizations = {
+            'en-US': 'report',
+            'en-GB': 'report',
+            'es-ES': 'reportar',
+            'pt-BR': 'reportar',
+            'fr': 'signaler'
+        },
+        description_localizations = {
+            'en-US': 'Send a report to my owner',
+            'en-GB': 'Send a report to my owner',
+            'es-ES': 'Enviar un informe a mi propietario',
+            'pt-BR': 'Envia um report para meu dono',
+            'fr': 'Envoyer un rapport à mon propriétaire'
+        })
     @commands.cooldown(1,5, commands.BucketType.user)
     @option(name = 'report', description = 'Escreva o report')
     @commands.cooldown(1,5, commands.BucketType.user)

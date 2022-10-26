@@ -306,8 +306,8 @@ EditEmbed - (Gerenciar canais) - Edita uma embed já enviada no chat desejado
             'description': 'Comandos gerais',
 
             'content':'''
-Hello - Comando teste do Lothus
-Random - Escolhe um numero aleatorio para você
+OlaMundo- Comando teste do Lothus
+Aleatorio - Escolhe um numero aleatorio para você
 Ping - Mostra o meu ping e da api do discord
 Servers - Diz em quantos servers eu estou
 Userinfo - puxa as informações de algum membro ou as suas
@@ -324,12 +324,11 @@ Profile - Envia o perfil de um membro
             'description':'Comandos de economia',
 
             'content':'''
-Roll - Voce pode ganhar de 0 a 2000 lothcoins
-LothCoins - Mostra quantos lothcoins você tem ou do membro mencionado
+Rolar - Voce pode ganhar de 0 a 2000 lothcoins
+Carteira - Mostra quantos lothcoins você tem ou do membro mencionado
 LothCoinsTop - Mostra o rank de pessoas mais ricas
-SlotMachine - Você pode apostar na sorte e quadruplicar suas lothcoins
-Transfer - Você pode transferir lothcoins para outras pessoas
-FlipCoinBet - Jogue cara ou coroa valendo suas lothcoins
+Caça-Niquel - Você pode apostar na sorte e quadruplicar suas lothcoins
+Transferir - Você pode transferir lothcoins para outras pessoas
 '''
         },
         'suport': {
@@ -339,8 +338,8 @@ FlipCoinBet - Jogue cara ou coroa valendo suas lothcoins
             'description': 'Comandos de suporte',
 
             'content': '''
-Sugest - Envia uma sugestão para meu dono
-Report - Envia um report para meu dono
+Sugestão - Envia uma sugestão para meu dono
+Reportar - Envia um report para meu dono
 '''
         },
         'image':{
@@ -367,14 +366,14 @@ Head_Minecraft - Envia a cabeça de um jogador de minecraft
             'description': 'Comandos de ação',
 
             'content':'''
-Hug - Abraça um membro
-Bite - Morde um membro
-Slap - Bate em algum membro
-Kiss - Beija um membro
+Abraçar - Abraça um membro
+Morder - Morde um membro
+Tapa - Bate em algum membro
+Beijar - Beija um membro
 Cafune - Faz um cafune em alguem
-Punch - Soca algum membro
-Lick - Lambe um membro
-FlipCoin - Joga uma moeda 
+Socar - Soca algum membro
+Lamber - Lambe um membro
+GirarMoeda - Joga uma moeda 
 '''
         }
 
