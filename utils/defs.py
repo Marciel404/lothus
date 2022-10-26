@@ -1,3 +1,4 @@
+from db.members import *
 from db.moderation import *
 from translate.ptBR import *
 from translate.enUS import *

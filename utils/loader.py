@@ -5,7 +5,7 @@ __title__ = "LothusBot"
 __author__ = "Marciel404"
 __license__ = "MIT"
 __copyright__ = "Copyright 2022-present Marciel404"
-__version__ = "2.0.1"
+__version__ = "3.0.0"
 
 class loadcogs():
 
