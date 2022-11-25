@@ -1,0 +1,332 @@
+{
+
+    "args":{
+        
+        "adv": "warning",
+
+        "rmvadv": "warning removal",
+
+        "notvote": "To use this command you need to vote on top.gg, use /vote",
+
+        "random": "Your chosen number was",
+
+        "advsucess": "{} successfully warned",
+
+        "notadv": "This member not have warnings",
+
+        "rmvadvsucess": "{} warning removed successfully",
+
+        "gan": "you won",
+
+        "act": "activate",
+
+        "dsb": "disable",
+
+        "sendid": "Send the chat id in the chat",
+
+        "sucessdef": "Channel set successfully",
+
+        "undef": "Log disabled successfully",
+
+        "logs":{
+
+            "messaged": "Message sent by {0} was deleted in {1}",
+            "edit": "Message sent by {0} was edited in {1}",
+            "msg": "Menssage",
+            "old": "Old",
+            "new": "New",
+            "enter": "joined the call",
+            "exit": "left the call",
+            "semove": "{0} moved from the call {1} for the call {2}",
+            "semute": "muted the microphone on",
+            "sedesmute": "unmuted the microphone on"
+
+        },
+
+        "error": {
+
+            "autorole": {
+
+                "notpermission": "I am not allowed to give the charge",
+                "notpermission2": "and a log channel is not set so I sent you a message"
+
+            }
+  
+        },
+
+        "hello": "Hello World",
+
+        "ping": "My ping",
+
+        "num": "Your number was",
+
+        "feedback": {
+
+            "sugest": "Your suggestion was send to my owner",
+            "report": "Your report has been sent to my owner"
+
+        },
+
+        "lang": {
+
+            "select": "Select the desired language",
+            "lang": "languages",
+            "langequal": "I already speaking this language",
+            "ptbr": "Brazilian portuguese",
+            "eng": "English",
+            "fr": "French",
+            "es": "espanish"
+
+        },
+
+        "images": {
+ 
+            "cat": "A random cat photo",
+
+            "perfection": "Person: \"Perfection doesn't exist\"\nMe:"
+
+        },
+
+        "servers":{
+
+            "s": "I'm on {0} servers"
+
+        },
+
+        "avatar":{
+
+            "click1": "Click here",
+            "click2": "to download the image"
+
+        },
+
+        "si":{
+
+            "name": "Name",
+            "id": "Server id",
+            "members": "Members",
+            "channels": "Channels",
+            "text": "Text",
+            "voice": "Voice",
+            "verify": "Verification level",
+            "own": "Owner",
+            "create": "Created in"
+
+        },
+
+        "ui": {
+
+            "name": "Name",
+            "cc": "Account created in",
+            "js": "Join the server at",
+            "toprole": "Top Role"
+
+        },
+
+        "invite": {
+
+            "invite": "Invite",
+            "dsc": "Invite me by clicking here"
+
+        },
+
+        "emoji": {
+
+            "name":"Emoji name",
+            "id": "Emoji Id",
+            "mention": "Mention",
+            "adition": "Added in",
+            "server": "Source server"
+
+        },
+
+        "botinfo": {
+
+            "mif": "My informations",
+            "name": "Name",
+            "language": "Language",
+            "version": "Pycord version",
+            "pyversion": "Python version",
+            "cmd": "Commands",
+            "ii": "Initial idea",
+            "rz": "Realization"
+
+        },
+
+        "topgg": {
+
+            "dsc":"Thank you so much for choosing to vote for me {0}\nthis helps me a lot and did you know that I have it too\na support server, it's all down here",
+            "duvids":"Do you have any doubts? Login to my Support Server!",
+            "cresc": "Want to help me grow? Here is the link from Top.gg",
+            "invite": "Wanting to invite me? Here is the link"
+
+        },
+
+        "actions": {
+
+            "flip1": "Fell heads",
+            "flip2": "Fell tails",
+
+            "kiss": "Kiss",
+            "slap": "Slap",
+            "hug": "Hug",
+            "punch": "Punch",
+            "pat": "Cafune",
+            "bite": "Bite",
+            "lick": "Lambida",
+
+            "actionkiss": "kissed",
+            "actionhug": "hugged",
+            "actionslap": "slapped",
+            "actionpat": "made a cafuné in",
+            "actionpunch": "punched",
+            "actionbite": "he bit",
+            "actionlick": "licked",
+
+            "return": "Click the 🔁 to give back",
+            "notkiss": "I think we better just be friends"
+        },
+
+        "mod": {
+
+            "dsccall": "{} successfully disconnected",
+
+            "mvcall": "{} moved to {}",
+
+            "notcall": "{} is not on a voice channel",
+
+            "adv": "{} was warned by {}\nReason:{}",
+
+            "rmvadv": "{} removed warning from {}",
+
+            "logban": "Banned member: <@{0}>\nWho banned: {1}\nReason: {2}\nID: {3}",
+            "logkick": "Expelled member: <@{0}>\nWho expelled: {1}\nReason: {2}\nID: {3}",
+            "logunban": "Unbanned member: <@{0}>\nWho unbanned: {1}\nReason: {2}\nID: {3}",
+            "logadv": "Author: <@{0}>\nMember: <@{1}>\nReason: {2}",
+
+            "confirmban": "You are about to ban {0} are you sure?",
+            "confirmkick": "You're about to kick out {0} are you sure?",
+
+            "notreason": "reason not informed",
+            
+            "kicksucess": "successfully expelled",
+            "bansucess": "successfully banned",
+            "unbansucess": "successfully unbanned",
+            "lognotfound": "The logs channel was not chosen, use /setlogs to set a",
+            
+            "notpermission": "You are not allowed to do that.",
+            "cooldown": "You need to wait {0} to use this command again",
+            "bannotfound": "I didn't find this member in the server bans",
+            "botnotpermission1": "Sorry, but I'm not allowed to",
+            "botnotpermission2": "to use this command",
+
+            "log": "Which log will you set?",
+            "lmod": "Moderation log",
+            "lvoice": "Voice log",
+            "ltxt": "Text log",
+            "lmic": "Mic log",
+            "setlog": "Chat logs successfully set to",
+            "unsetlog": "Log chat removed",
+            "setautorole": "Autorole post successfully set to",
+            "unsetautorole": "Autorole title removed",
+            "autoroleoff": "Autorole is already disabled",
+
+            "limitclear1": "The maximum limit is 1000 messages",
+            "limitclear2": "You need to choose a number of messages, the maximum quantity is 1000 messages",
+            "limitclear3": "The amount must be positive",
+            "clearchat": "The chat had {0} messages deleted by {1}"
+        },
+
+        "economy": {
+
+            "notself": "You cannot transfer to yourself",
+            "botacount": "Bots don't have an account",
+            "bottransfer": "You cannot transfer to bots",
+            "notmoney": "You don't have enough LothCoins",
+            ">0": "The amount to transfer must be greater than 0",
+            "<0": "The amount to be transferred must be positive",
+            "vct": "You transferred {0} LothCoins to {1}",
+            "lost": "You lost",
+            "top": "Top richest"
+        },
+
+        "minecraft": {
+
+            "errorbody": "I don't found the body, probably this player doesn't exist",
+            "errorhead": "I don't found the head, probably this player doesn't exist",
+            "errorskin": "I don't found the skin, probably this player doesn't exist",
+            "erroravatar": "I don't found the avatar, probably this player doesn't exist"
+
+        },
+
+        "lulamaromba": {
+
+            "preparevideo": "I'm preparing your video, this may take a while",
+            "herevideo": "Here is your video {0}"
+
+        }
+
+    },
+
+    "help":{
+
+        "extras":{
+
+            "init":"Choose category\nwanted to know\nmy commands",
+
+            "commands":"My commands"
+        },
+
+        "mod": {
+
+            "name1": "Moderation",
+
+            "name2": "Moderation commands",
+
+            "description": "**Name/Permission/Role**",
+
+            "content":"Ban - (Ban members) - Ban members from your server\nUnban - (Ban Members) - Unban a member on your server\nKick - (Kick Members) - Kicks a person from your server\nClear - (Manage channels) - Clears the chat from your server\nSetLogs - (Manage channels) - Sets the bot's logs channel\nAutoRole - (Manage channels) - Sets a role to Autorole\nSetLang - (Manage Server) - Sets the bot's language\nAddWarning - (Kick Members) - Gives a member a warning\nRemoveWarning - (Remove Members) - Removes a warning from a member\nForceMove - (Move members) - Moves a member from one call to another\nForceDisconnect - (Move members) - Disconnects a member from a call\nEmbed - (Manage channels) - Sends an embed in the desired chat\nEditEmbed - (Manage channels) - Edit an embed already sent in the desired chat"
+        },
+        "general":{
+
+            "name": "General",
+
+            "description": "General commands",
+
+            "content":"HelloWorld - Lothus test command\nRandom - Choose a random number for you\nPing - Shows my ping and discord api\nServers - Tells how many servers I'm on\nUserinfo - pulls a member's information or their\nServerInfo - pulls information from the server\nInvite - Send the link to invite the bot\nWarns - Sends a member's warnings"
+        },
+        "economy":{
+
+            "name":"Economy",
+
+            "description":"Economy commands",
+
+            "content":"Roll - You can win from 0 to 2000 lothcoins\nWallet - Shows how many lothcoins you have or from the mentioned member\nLothCoinsTop - Shows the rank of richest people\nSlotMachine - You can bet on luck and quadruple your lothcoins\nTransfer - You can transfer lothcoins to other people"
+        },
+        "suport": {
+
+            "name": "Support",
+
+            "description": "Support commands",
+
+            "content": "Suggest - Send a suggestion to my owner\nReport - Send a report to my owner"
+        },
+        "image":{
+            
+            "name": "Images",
+
+            "description": "Image commands",
+
+            "content":"Cat - Send an image of a random cat\nAchievement_Minecraft - Create a minecraft achievement\nPerfection - Create a \"perfection\" meme\nwanted - Create a wanted poster\nBody_Minecraft - Sends the body of a minecraft player\nSkin_Minecraft - Sends the skin of a minecraft player\nAvatar_Player_Minecraft - Sends the avatar of a minecraft player\nHead_Minecraft - Sends the head of a minecraft player"
+        },
+        "actions":{
+            
+            "name": "Actions",
+
+            "description": "Actions commands",
+
+            "content":"Hug - Hugs a member\nBite - Bite a member\nSlap - Hits a member\nKiss - Kiss a member\nCafune - Cafune someone\nPunch - Punch some member\nLick - Lick a member\nFlipCoin - Flip a coin"
+        }
+
+    }
+}

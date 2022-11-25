@@ -1,61 +1,43 @@
 from pymongo import MongoClient
-from utils.configs import configData
+from main import configData
 
 cluster = MongoClient(configData['mongokey'])
-
 db = cluster[configData['database']]
-
 mod = db['MOD']
-
 advdb = db['ADV']
 
-async def lang(opt,oq,guild):
+class dbmoderation:
 
-    if opt is not None:
+    def lang(opt,oq,guild):
 
-        if mod.count_documents({"_id":guild.id}) == 0:
+        if opt is not None:
+            if mod.count_documents({"_id":guild.id}) == 0:
+                mod.insert_one({"_id":guild.id, "Nome":guild.name})
+            mod.update_one({"_id": guild.id}, {"$set": {f"{opt}": oq}}, upsert = True)
 
-            mod.insert_one({"_id":guild.id, "Nome":guild.name})
+    def autorole(opt,oq,guild,id):
 
-        mod.update_one({"_id": guild.id}, {"$set": {f"{opt}": oq}}, upsert = True)
+        if opt is not None:
+            if mod.count_documents({"_id":guild.id}) == 0:
+                mod.insert_one({"_id":guild.id, "Nome":guild.name})
+            mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?':oq,'id':id}}}, upsert = True)
 
-async def autorole(opt,oq,guild,id):
+    def logs(opt,oq,guild,id, webhook):
 
-    if opt is not None:
+        if opt is not None:
+            if mod.count_documents({"_id":guild.id}) == 0:
+                mod.insert_one({"_id":guild.id, "Nome":guild.name})
+            mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?': oq,'id': id, 'webhook': webhook}}},upsert = True)
 
-        if mod.count_documents({"_id":guild.id}) == 0:
+    def adcadvdb(guild, author, member, qnt, motivo):
+        advdb.update_one( { "_id":f'{guild.id}_{member.id}'}, {'$set':{qnt:[author.id,member.id,motivo]}}, upsert = True )
 
-            mod.insert_one({"_id":guild.id, "Nome":guild.name})
+    def rmvadvdb(guild,author,member, qnt, motivo):
+        advdb.update_one( { "_id":f'{guild.id}_{member.id}'}, {'$unset':{qnt:[author,member.id,motivo]}})
 
-        mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?':oq,'id':id}}}, upsert = True)
+    def msgtckid(id, guild):
 
-
-async def logs(opt,oq,guild,id, webhook):
-
-    if opt is not None:
-
-
-        if mod.count_documents({"_id":guild.id}) == 0:
-
-            mod.insert_one({"_id":guild.id, "Nome":guild.name})
-
-        mod.update_one({"_id": guild.id}, {'$set': {opt: {'True?': oq,'id': id, 'webhook': webhook}}},upsert = True)
-
-
-async def adcadvdb(guild, author, member, qnt, motivo):
-
-    advdb.update_one( { "_id":f'{guild.id}_{member.id}'}, {'$set':{qnt:[author.id,member.id,motivo]}}, upsert = True )
-
-async def rmvadvdb(guild,author,member, qnt, motivo):
-
-    advdb.update_one( { "_id":f'{guild.id}_{member.id}'}, {'$unset':{qnt:[author,member.id,motivo]}})
-
-async def msgtckid(id, guild):
-
-    if id is not None:
-
-        if mod.count_documents({"_id":guild.id}) == 0:
-
-            mod.insert_one({"_id":guild.id, "Nome":guild.name})
-
-        mod.update_one({"_id": guild.id}, {"$set": {"msgtck": id}}, upsert = True)
+        if id is not None:
+            if mod.count_documents({"_id":guild.id}) == 0:
+                mod.insert_one({"_id":guild.id, "Nome":guild.name})
+            mod.update_one({"_id": guild.id}, {"$set": {"msgtck": id}}, upsert = True)

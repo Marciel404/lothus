@@ -1,7 +1,7 @@
-import discord
+import discord, hexacolors
 from discord import Interaction
 from discord.ui import View, Select
-from utils.defs import *
+from funcs.defs import *
 
 class buttonkick(View):
     
@@ -18,17 +18,15 @@ class buttonkick(View):
         super().__init__(timeout = 180)
 
     @discord.ui.button(label = '✅', style = discord.ButtonStyle.blurple)
-    async def confirmban(self, button: discord.Button, interaction: Interaction):
+    async def confirmkick(self, button: discord.Button, interaction: Interaction):
 
-        t = await translate(interaction.guild)
+        t = translates(interaction.guild)
 
         if interaction.user.id == self.ctx.id:
 
             try:
-        
-                l1 = self.bot.get_channel(mod.find_one({"_id": interaction.guild.id})['lmod']['id'])
 
-                e = discord.Embed(title = 'kick', description = t["args"]["mod"]["logkick"].format(self.ctx.mention,self.motivo,self.membro.id))
+                e = discord.Embed(title = 'kick', description = t["args"]["mod"]["logkick"].format(self.membro.name, self.ctx.mention,self.motivo,self.membro.id))
 
                 await interaction.message.delete()
 
@@ -36,11 +34,11 @@ class buttonkick(View):
 
                 await interaction.guild.kick(user = self.membro ,reason = self.motivo)
 
-                channel = self.bot.get_channel(db['lmod']['id'])
+                channel = self.bot.get_channel(mod.find_one({'_id': interaction.guild.id})['lmod']['id'])
 
                 try:
 
-                    w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+                    w = await self.bot.fetch_webhook(mod.find_one({'_id': interaction.guild.id})['lmod']['webhook'])
 
                     await w.send(embed = e)
                 
@@ -48,9 +46,9 @@ class buttonkick(View):
 
                     webhook = await channel.create_webhook(name = 'Lothus', avatar = await self.bot.user.avatar.read(), reason = f'Log')
 
-                    await logs('lmod',True,interaction.guild,db['lmod']['id'], webhook.id)
+                    dbmoderation.logs('lmod',True,interaction.guild,mod.find_one({'_id': interaction.guild.id})['lmod']['id'], webhook.id)
 
-                    w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+                    w = await self.bot.fetch_webhook(mod.find_one({'_id': interaction.guild.id})['lmod']['webhook'])
 
                     await w.send(embed = e)
 
@@ -58,7 +56,7 @@ class buttonkick(View):
 
             except:
 
-                e = discord.Embed(title = 'kick', description = t["args"]["mod"]["logkick"].format(self.ctx.mention,self.motivo,self.membro.id))
+                e = discord.Embed(title = 'kick', description = t["args"]["mod"]["logkick"].format(self.membro.name, self.ctx.mention,self.motivo,self.membro.id))
 
                 await interaction.channel.send(embed = e)
 
@@ -77,7 +75,7 @@ class buttonkick(View):
     @discord.ui.button(label = '❎', style = discord.ButtonStyle.blurple)
     async def denykick(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        t = await translate(interaction.guild)
+        t = translates(interaction.guild)
 
         if interaction.user.id == self.ctx.id:
 
@@ -106,13 +104,13 @@ class buttonban(View):
     @discord.ui.button(label = '✅', style = discord.ButtonStyle.blurple)
     async def confirmban(self, button: discord.Button, interaction: Interaction):
 
-        t = await translate(interaction.guild)
+        t = translates(interaction.guild)
 
         if interaction.user.id == self.ctx.id:
 
             try:
 
-                e = discord.Embed(title = 'Ban', description =  t["args"]["mod"]["logban"].format(self.ctx.mention,self.motivo,self.membro.id))
+                e = discord.Embed(title = 'Ban', description =  t["args"]["mod"]["logban"].format(self.membro.name, self.ctx.mention,self.motivo,self.membro.id))
 
                 await interaction.message.delete()
 
@@ -120,11 +118,11 @@ class buttonban(View):
 
                 await interaction.guild.ban(user = self.membro ,reason = self.motivo)
 
-                channel = self.bot.get_channel(db['lmod']['id'])
+                channel = self.bot.get_channel(mod.find_one({'_id': interaction.guild.id})['lmod']['id'])
 
                 try:
 
-                    w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+                    w = await self.bot.fetch_webhook(mod.find_one({'_id': interaction.guild.id})['lmod']['webhook'])
 
                     await w.send(embed = e)
                 
@@ -132,9 +130,9 @@ class buttonban(View):
 
                     webhook = await channel.create_webhook(name = 'Lothus', avatar = await self.bot.user.avatar.read(), reason = f'Log')
 
-                    await logs('lmod',True,interaction.guild,db['lmod']['id'], webhook.id)
+                    dbmoderation.logs('lmod',True,interaction.guild,mod.find_one({'_id': interaction.guild.id})['lmod']['id'], webhook.id)
 
-                    w = await self.bot.fetch_webhook(db['lmod']['webhook'])
+                    w = await self.bot.fetch_webhook(mod.find_one({'_id': interaction.guild.id})['lmod']['webhook'])
 
                     await w.send(embed = e)
 
@@ -142,7 +140,7 @@ class buttonban(View):
 
             except:
 
-                E = discord.Embed(title = 'Ban', description = t["args"]["mod"]["logban"].format(self.ctx.mention,self.motivo,self.membro.id))
+                E = discord.Embed(title = 'Ban', description = t["args"]["mod"]["logban"].format(self.membro.name, self.ctx.mention,self.motivo,self.membro.id))
 
                 await interaction.channel.send(embed = E)
 
@@ -161,7 +159,7 @@ class buttonban(View):
     @discord.ui.button(label = '❎', style = discord.ButtonStyle.blurple)
     async def denyban(self, button: discord.ui.Button, interaction: discord.Interaction):
 
-        t = await translate(interaction.guild)
+        t = translates(interaction.guild)
 
         if interaction.user.id == self.ctx.id:
 
@@ -226,7 +224,7 @@ class selecthelp(Select):
 
                 m = discord.Embed(title = self.t['help']['extras']['commands'],
                 description = self.t['help']['mod']['description'],
-                color = 000000)
+                color = hexacolors.string('indigo'))
 
                 m.add_field(
                     name = self.t['help']['mod']['name1'],
@@ -239,7 +237,7 @@ class selecthelp(Select):
             elif self.values[0] == '1':
 
                 g = discord.Embed(title = self.t['help']['extras']['commands'],
-                color = 000000)
+                color = hexacolors.string('indigo'))
 
                 g.add_field(
                     name = self.t['help']['general']['description'],
@@ -252,7 +250,7 @@ class selecthelp(Select):
             elif self.values[0] == '2':
 
                 e = discord.Embed(title = self.t['help']['extras']['commands'],
-                color = 000000)
+                color = hexacolors.string('indigo'))
 
                 e.add_field(
                     name = self.t['help']['economy']['description'], 
@@ -265,7 +263,7 @@ class selecthelp(Select):
             elif self.values[0] == '3':
 
                 s = discord.Embed(title = self.t['help']['extras']['commands'],
-                color = 000000)
+                color = hexacolors.string('indigo'))
 
                 s.add_field(
                     name = self.t['help']['suport']['description'], 
@@ -278,7 +276,7 @@ class selecthelp(Select):
             elif self.values[0] == '4':
 
                 i = discord.Embed(title = self.t['help']['extras']['commands'],
-                color = 000000)
+                color = hexacolors.string('indigo'))
 
                 i.add_field(
                     name= self.t['help']['image']['description'], 
@@ -291,7 +289,7 @@ class selecthelp(Select):
             elif self.values[0] == '5':
 
                 a = discord.Embed(title = self.t['help']['extras']['commands'],
-                color = 000000)
+                color = hexacolors.string('indigo'))
 
                 a.add_field(
                     name= self.t['help']['actions']['description'], 
@@ -345,7 +343,7 @@ class setlang(Select):
 
                 return
 
-            await lang('lang',self.values[0],interaction.guild)
+            dbmoderation.lang('lang',self.values[0],interaction.guild)
 
             await interaction.response.send_message('Okay, agora falarei português', ephemeral = True)
 
@@ -357,7 +355,7 @@ class setlang(Select):
 
                 return
 
-            await lang('lang',self.values[0],interaction.guild)
+            dbmoderation.lang('lang',self.values[0],interaction.guild)
 
             await interaction.response.send_message('ok now i will speak english', ephemeral = True)
 
@@ -369,7 +367,7 @@ class setlang(Select):
 
                 return
 
-            await lang('lang',self.values[0],interaction.guild)
+            dbmoderation.lang('lang',self.values[0],interaction.guild)
 
             await interaction.response.send_message('Bon, maintenant je vais parler français', ephemeral = True)
 
@@ -381,7 +379,7 @@ class setlang(Select):
 
                 return
 
-            await lang('lang',self.values[0],interaction.guild)
+            dbmoderation.lang('lang',self.values[0],interaction.guild)
 
             await interaction.response.send_message('Bien, ahora hablaré español.', ephemeral = True)
 
@@ -421,7 +419,7 @@ class actvate(Select):
         )
     async def callback(self, interaction: discord.Interaction):
 
-        t = await translate(interaction.guild)
+        t = translates(interaction.guild)
 
         db = mod.find_one({'_id': interaction.guild.id})
 
@@ -449,19 +447,19 @@ class actvate(Select):
 
                     await w.edit(channel = id)
 
-                    await logs(self.log,True,interaction.guild,id.id, db[self.log]['webhook'])
+                    dbmoderation.logs(self.log,True,interaction.guild,id.id, db[self.log]['webhook'])
             
             except:
 
                 webhook = await id.create_webhook(name = 'Lothus', avatar = await self.bot.user.avatar.read(), reason = f'Log ')
 
-                await logs(self.log,True,interaction.guild,id.id, webhook.id)     
+                dbmoderation.logs(self.log,True,interaction.guild,id.id, webhook.id)     
         
         if self.values[0] == 'desativar':
 
             await interaction.response.send_message(t['args']['undef'], ephemeral = True)
 
-            await logs(self.log,False,interaction.guild,None,None)
+            dbmoderation.logs(self.log,False,interaction.guild,None,None)
 
 class setlog(Select):
 
@@ -514,17 +512,10 @@ class setlog(Select):
     async def callback(self, interaction : discord.Interaction):
 
         if self.values[0] == 'mod':
-
             await interaction.response.send_message(view = discord.ui.View(actvate(self.bot, interaction.user,interaction.guild,'lmod')), ephemeral = True)
-
         if self.values[0] == 'voice':
-
             await interaction.response.send_message(view = discord.ui.View(actvate(self.bot, interaction.user,interaction.guild,'lvoice')), ephemeral = True)
-
         if self.values[0] == 'txt':
-
             await interaction.response.send_message(view = discord.ui.View(actvate(self.bot, interaction.user,interaction.guild,'ltxt')), ephemeral = True)
-        
         if self.values[0] == 'mic':
-
             await interaction.response.send_message(view = discord.ui.View(actvate(self.bot, interaction.user,interaction.guild,'lmic')), ephemeral = True)

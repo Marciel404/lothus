@@ -2,7 +2,7 @@ import discord
 
 from discord.ui import InputText, Modal
 from db.members import *
-from utils.defs import *
+from funcs.defs import *
 
 class perfil(Modal):
 
@@ -13,91 +13,50 @@ class perfil(Modal):
         super().__init__(title = 'Profile')
 
         self.add_item(
-
             InputText(
-
                 label = 'Idade',
-
                 placeholder = 'Sua idade', 
-
                 value = infos['r0']['value'],
-
                 style = discord.InputTextStyle.singleline,
-
                 min_length = 1,
-
                 max_length = 2,
-
                 required = False
-
             )
-        )
-
+        ),
         self.add_item(
-
             InputText(
-
                 label = 'Genero',
-
                 placeholder = 'Seu genero',
-
                 value = infos['r1']['value'],
-
                 style = discord.InputTextStyle.singleline,
-
                 required = False
-
             )
         ),
-
         self.add_item(
-
             InputText(
-
                 label = 'País',
-
                 placeholder = 'País que está morando',
-
                 value = infos['r2']['value'],
-
                 style = discord.InputTextStyle.singleline,
-
                 required = False
-
             )
         ),
-
         self.add_item(
-
             InputText(
-
                 label = 'Cidade',
-
                 placeholder = 'Cidade onde mora',
-
                 value = infos['r3']['value'],
-
                 style = discord.InputTextStyle.singleline,
-
                 required = False
-
             )
         ),
-
         self.add_item(
-
             InputText(
-
                 label = 'Descrição',
-
                 placeholder = 'Descrição do perfil',
-
                 value = infos['r4']['value'],
-
                 style = discord.InputTextStyle.paragraph,
-
                 required = False
-
             )
         )
     async def callback(self, interaction: discord.Interaction):
@@ -108,11 +67,11 @@ class perfil(Modal):
 
             if self.children[i].value == '':
 
-                await upPerfil(interaction.user,f'r{i}',self.children[i].placeholder,None)
+                dbmember.upPerfil(interaction.user,f'r{i}',self.children[i].placeholder,None)
             
             else:
 
-                await upPerfil(interaction.user,f'r{i}',self.children[i].placeholder,self.children[i].value)
+                dbmember.upPerfil(interaction.user,f'r{i}',self.children[i].placeholder,self.children[i].value)
 
             if i == 4:
 
